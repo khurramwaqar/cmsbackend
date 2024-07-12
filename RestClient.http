@@ -1,0 +1,26 @@
+POST https://zapi.aryzap.com/api/payment/reg HTTP/1.1
+content-type: application/json
+
+{
+     "currency": "PKR",
+     "orderId": "9200000000000001",
+     "packageAmount": "50",
+     "customerName": "John Smith",
+     "packageName": "Basic 50"
+}
+
+# {
+#     "title": "data.seriesName",
+#                 "description": "data.seriesDescription",
+#                 "cast": "casts",
+#                 "seriesDM": "data.seriesDM",
+#                 "seriesYT":" data.seriesYT",
+#                 "seiresCDN": "data.seriesCDNLink",
+#                 "imagePoster": "`poster/${image1}`",
+#                 "imageCoverMobile": "`mobile/${image2}`",
+#                 "trailer": "data.seriesTrailer",
+#                 "ost": "data.seriesOST",
+#                 "logo": "`logo/${image4}`",
+#                 "day": "data.seriesAirDay",
+#                 "time": "data.seriesAirTime"
+# }
