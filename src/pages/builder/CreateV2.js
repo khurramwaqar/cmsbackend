@@ -181,9 +181,9 @@ const HomeBuilderCreateV2 = () => {
                     setSlider(sliderResponse.data);
                     setCategories(categoriesResponse.data);
                     setSingleSeries(seriesResponse.data);
-                    setGenres(genresResponse.data);
+                    setGenres(appsResponse.data);
 
-                    const appsHolder = genresResponse.data.map(app => ({
+                    const appsHolder = appsResponse.data.map(app => ({
                         value: app._id,
                         label: app.title
                     }));
@@ -424,7 +424,6 @@ const HomeBuilderCreateV2 = () => {
                                             borderRadius: 5,
 
                                         }}
-
                                         group={{ name: 'groupName', pull: 'clone' }}
                                         animation={200}
                                         delayOnTouchStart={true}

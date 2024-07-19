@@ -35,12 +35,18 @@ const HomeBuilderEditV2 = (props) => {
 
     const [items, setItems] = useState(['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6']);
     const [state, setState] = useState([
-        { id: 1, name: "Slider", type: "ImageSlider", items: null, data: null },
-        { id: 1, name: "Categories", type: "Category", items: null, data: null },
-        { id: 2, name: "Single Series", type: "SingleSeries", items: null, data: null },
-        { id: 3, name: "Selective Series", type: "SelectiveSeries", items: null, data: null },
-        { id: 4, name: "Selective Genres", type: "SelectiveGenres", items: null, data: null },
-        { id: 5, name: "Series By Genres", type: "SeriesByGenres", items: null, data: null }
+        { id: 1, name: "Slider:Square", type: "ImageSlider", items: null, data: null, ui: "v1" },
+        { id: 2, name: "Slider:Desktop&TV", type: "ImageSlider", items: null, data: null, ui: "v2" },
+        { id: 3, name: "Categories: Portrait", type: "Category", items: null, data: null, ui: "v1" },
+        { id: 4, name: "Categories: LiveLongBanner", type: "Category", items: null, data: null, ui: "v2" },
+        { id: 5, name: "Categories: Square", type: "Category", items: null, data: null, ui: "v3" },
+        { id: 6, name: "Categories: FullBG", type: "Category", items: null, data: null, ui: "v4" },
+        { id: 7, name: "Single Series: YTThumb", type: "SingleSeries", items: null, data: null, ui: "v1" },
+        { id: 8, name: "Single Series: Portarit", type: "SingleSeries", items: null, data: null, ui: "v2" },
+        { id: 9, name: "Single Series: FullBG", type: "SingleSeries", items: null, data: null, ui: "v3" },
+        { id: 10, name: "Selective Series", type: "SelectiveSeries", items: null, data: null, ui: "v1" },
+        { id: 11, name: "Selective Genres", type: "SelectiveGenres", items: null, data: null, ui: "v1" },
+        { id: 12, name: "Series By Genres", type: "SeriesByGenres", items: null, data: null, ui: "v1" }
     ]);
 
     const [state2, setState2] = useState([]);
@@ -430,20 +436,20 @@ const HomeBuilderEditV2 = (props) => {
                                             }} key={item.id}>{item.name}
                                                 <br />
                                                 {item.type == "ImageSlider" && categories != null && (
-                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                         <option value="null">Not Selected</option>
                                                         {slider?.slider.map((sliders) => <option value={sliders._id}> {sliders.sliderTitle} </option>)}
                                                     </select>
                                                 )}
                                                 {item.type == "Category" && categories != null && (
-                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                         <option value="null">Not Selected</option>
                                                         {categories.map((category) => <option value={category.title}> {category.title} </option>)}
                                                     </select>
                                                 )}
 
                                                 {item.type == "SingleSeries" && singleSeries != null && (
-                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: item.name })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: item.name, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                         <option value="null">Not Selected</option>
 
                                                         {singleSeries.series.map((single) => <option value={single._id}> {single.title} </option>)}
@@ -451,7 +457,7 @@ const HomeBuilderEditV2 = (props) => {
                                                 )}
 
                                                 {item.type == "SeriesByGenres" && genres != null && (
-                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: item.name })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: item.name, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                         <option value="null">Not Selected</option>
 
                                                         {genres.map((genre) => <option value={genre._id}> {genre.title} </option>)}

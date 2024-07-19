@@ -31,6 +31,7 @@ const HomeSliders = () => {
             <div className="text-2xl font-bold pb-2 mb-5  border-b border-b-gray-500 ">
                 Sliders
             </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
                 <a href="/slider/create">
                     <div className={"rounded-md hover:bg-gray-950 bg-blue-950 animate-pulse"}>
@@ -53,6 +54,7 @@ const HomeSliders = () => {
                         </div>
                     </div>
                 </a>
+
                 {allApps ? allApps.slider.map((app, index) => {
                     return (
                         <a href={'/builder/edit/' + app._id}>
@@ -65,10 +67,10 @@ const HomeSliders = () => {
                                             <img src={'./icons8-bundle-32.png'} className="w-5 h-5" />
 
                                             <h2 className="text-sm font-bold mt-2">
-                                                {app.sliderTitle}
+                                                {app.sliderTitle ? app.sliderTitle : "N/A"}
                                             </h2>
                                             <h3 className="text-xs font-bold text-ellipsis line-clamp-1 marg">
-                                                {app.sliderAppId[0]}
+                                                {app.sliderAppId ? app.sliderAppId[0] : "N/A"}
                                             </h3>
 
                                         </div>
