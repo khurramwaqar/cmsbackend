@@ -11,7 +11,7 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { ReactSortable } from "react-sortablejs";
 
 import arrayMove from 'array-move';
-
+//Updated 
 const SortableItem = SortableElement(({ value }) => <li>{value}</li>);
 
 const SortableList = SortableContainer(({ items }) => {
