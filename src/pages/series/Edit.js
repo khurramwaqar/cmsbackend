@@ -183,6 +183,7 @@ const SeriesEdit = (props) => {
                     seiresCDN: res.data.seiresCDN,
                     imagePoster: res.data.imagePoster,
                     imageCoverMobile: res.data.imageCoverMobile,
+                    imageCoverDesktop: res.data.imageCoverDesktop,
                     trailer: res.data.trailer,
                     ost: res.data.ost,
                     logo: res.data.logo,
@@ -692,7 +693,7 @@ const SeriesEdit = (props) => {
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder=".m3u/.mp4/.mpd"
                                     onChange={(e) => setInputValues({ ...inputValues, seiresCDN: e.target.value })}
-                                    required />
+                                />
                             </div>
                             <div>
                                 <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series YT</label>
@@ -703,7 +704,7 @@ const SeriesEdit = (props) => {
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="YT playlist"
                                     onChange={(e) => setInputValues({ ...inputValues, seriesYT: e.target.value })}
-                                    required />
+                                />
                             </div>
                             <div>
                                 <label for="s_dm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series DM</label>
@@ -714,7 +715,7 @@ const SeriesEdit = (props) => {
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="DM playlist"
                                     onChange={(e) => setInputValues({ ...inputValues, seriesDM: e.target.value })}
-                                    required />
+                                />
                             </div>
                         </div>
                         <div class="grid gap-6 mb-6 md:grid-cols-3">
@@ -727,7 +728,7 @@ const SeriesEdit = (props) => {
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="trailer.m3u/yout.be/trailer/link"
                                     onChange={(e) => setInputValues({ ...inputValues, trailer: e.target.value })}
-                                    required />
+                                />
                             </div>
                             <div>
                                 <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Theme Song</label>
@@ -738,7 +739,7 @@ const SeriesEdit = (props) => {
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Series Theme Song, Drama's OST"
                                     onChange={(e) => setInputValues({ ...inputValues, ost: e.target.value })}
-                                    required />
+                                />
                             </div>
                             <div>
                                 <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
@@ -749,7 +750,7 @@ const SeriesEdit = (props) => {
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Series Type: show|live|singleVideo|webview"
                                     onChange={(e) => setInputValues({ ...inputValues, seriesType: e.target.value })}
-                                    required />
+                                />
                             </div>
                         </div>
                         <div class="mb-6">
@@ -760,6 +761,7 @@ const SeriesEdit = (props) => {
                                 onChange={setCasts}
                                 name="casts"
                                 placeHolder="Series Cast"
+
                             />
                         </div>
                         <div class="grid gap-6 mb-6 md:grid-cols-3">
@@ -773,7 +775,7 @@ const SeriesEdit = (props) => {
                                     placeholder="Mon-Fri"
                                     onChange={(e) => setInputValues({ ...inputValues, day: e.target.value })}
 
-                                    required />
+                                />
                             </div>
                             <div class="mb-6">
                                 <label for="s_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Time</label>
@@ -785,7 +787,7 @@ const SeriesEdit = (props) => {
                                     placeholder="09:45 PM"
                                     onChange={(e) => setInputValues({ ...inputValues, time: e.target.value })}
 
-                                    required />
+                                />
                             </div>
                             <div class="mb-6">
                                 <label for="s_ages" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age Ratings</label>
@@ -954,7 +956,9 @@ const SeriesEdit = (props) => {
                                     accept="image/*"
                                     type="file" />
                                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 1600x600px).</p>
-
+                                <div className="justify-center self-center" >
+                                    {inputValues?.imageCoverDesktop ? <img className="rounded-lg w-32 relative shadow-lg mx-auto" src={'https://node.aryzap.com/public/' + inputValues?.imageCoverDesktop} /> : ""}
+                                </div>
                             </div>
 
                             <div class="mb-6">
@@ -990,6 +994,7 @@ const SeriesEdit = (props) => {
                             <div class="flex items-center h-5">
                                 <input
                                     id="remember"
+                                    checked
                                     type="checkbox" value=""
                                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                                     required />

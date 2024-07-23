@@ -497,7 +497,7 @@ const SeriesCreate = () => {
                                     {...register("seriesCDNLink")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder=".m3u/.mp4/.mpd"
-                                    required />
+                                />
                             </div>
                             <div>
                                 <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series YT</label>
@@ -507,7 +507,7 @@ const SeriesCreate = () => {
                                     {...register("seriesYT")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="YT playlist"
-                                    required />
+                                />
                             </div>
                             <div>
                                 <label for="s_dm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series DM</label>
@@ -517,7 +517,7 @@ const SeriesCreate = () => {
                                     {...register("seriesDM")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="DM playlist"
-                                    required />
+                                />
                             </div>
                         </div>
                         <div class="grid gap-6 mb-6 md:grid-cols-3">
@@ -529,7 +529,7 @@ const SeriesCreate = () => {
                                     {...register("seriesTrailer")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="trailer.m3u/yout.be/trailer/link"
-                                    required />
+                                />
                             </div>
                             <div>
                                 <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Theme Song</label>
@@ -539,7 +539,7 @@ const SeriesCreate = () => {
                                     {...register("seriesOST")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Series Theme Song, Drama's OST"
-                                    required />
+                                />
                             </div>
                             <div>
                                 <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
@@ -571,7 +571,7 @@ const SeriesCreate = () => {
                                     {...register("seriesAirDay")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Mon-Fri"
-                                    required />
+                                />
                             </div>
                             <div class="mb-6">
                                 <label for="s_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Time</label>
@@ -581,7 +581,7 @@ const SeriesCreate = () => {
                                     {...register("seriesAirTime")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="09:45 PM"
-                                    required />
+                                />
                             </div>
                             <div class="mb-6">
                                 <label for="s_ages" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age Ratings</label>

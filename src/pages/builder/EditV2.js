@@ -41,9 +41,9 @@ const HomeBuilderEditV2 = (props) => {
         { id: 4, name: "Categories: LiveLongBanner", type: "Category", items: null, data: null, ui: "v2" },
         { id: 5, name: "Categories: Square", type: "Category", items: null, data: null, ui: "v3" },
         { id: 6, name: "Categories: FullBG", type: "Category", items: null, data: null, ui: "v4" },
-        { id: 7, name: "Single Series: YTThumb", type: "SingleSeries", items: null, data: null, ui: "v1" },
+        { id: 7, name: "Single Series: YTThumb", type: "SingleSeries", items: null, data: null, ui: "v5" },
         { id: 8, name: "Single Series: Portarit", type: "SingleSeries", items: null, data: null, ui: "v2" },
-        { id: 9, name: "Single Series: FullBG", type: "SingleSeries", items: null, data: null, ui: "v3" },
+        { id: 9, name: "Single Series: FullBG", type: "SingleSeries", items: null, data: null, ui: "v4" },
         { id: 10, name: "Selective Series", type: "SelectiveSeries", items: null, data: null, ui: "v1" },
         { id: 11, name: "Selective Genres", type: "SelectiveGenres", items: null, data: null, ui: "v1" },
         { id: 12, name: "Series By Genres", type: "SeriesByGenres", items: null, data: null, ui: "v1" }
@@ -95,6 +95,7 @@ const HomeBuilderEditV2 = (props) => {
         // Updating the state with the new array
         setCurrentData(newArray);
     };
+
 
     const updateItemAtIndex = (indexToUpdate, updatedItem) => {
         // Using map to create a new array with the updated item at the specified index
@@ -373,7 +374,7 @@ const HomeBuilderEditV2 = (props) => {
                 <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
                     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new Builder</h2>
                     <form action="#" onSubmit={handleSubmit} method='POST' enctype="multipart/form-data">
-                        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 ">
                             <div class="sm:col-span-2">
                                 <label for="homeTitle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Builder Title</label>
                                 <input
@@ -405,119 +406,120 @@ const HomeBuilderEditV2 = (props) => {
                             </div>
 
 
+                        </div>
 
+                        <div class="grid gap-6 mb-6 grid-cols-2 ">
+                            <div >
+                                <label for="homeTitle" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-white">Builder</label>
+                                <ReactSortable
+                                    style={{
+                                        backgroundColor: "rgba(255,255,255)",
+                                        padding: 5,
+                                        borderRadius: 5,
 
-                            <div class="grid gap-6 mb-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
-                                <div >
-                                    <label for="homeTitle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Builder</label>
-                                    <ReactSortable
-                                        style={{
-                                            backgroundColor: "rgba(255,255,255)",
-                                            padding: 5,
+                                    }}
+
+                                    group={{ name: 'groupName', pull: 'clone' }}
+                                    animation={200}
+                                    delayOnTouchStart={true}
+                                    delay={2}
+                                    list={state}
+                                    setList={setState}>
+                                    {state.map((item, key) => (
+                                        <div style={{
                                             borderRadius: 5,
+                                            background: '#e3e3e3',
+                                            padding: 8,
+                                            textAlign: 'center',
+                                            border: '1px dashed grey',
+                                            margin: 10,
+                                            fontSize: 12,
+                                            color: 'black',
+                                            fontWeight: "bold"
+                                        }} key={item.id}>{item.name}
+                                            <br />
+                                            {item.type == "ImageSlider" && categories != null && (
+                                                <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <option value="null">Not Selected</option>
+                                                    {slider?.slider.map((sliders) => <option value={sliders._id}> {sliders.sliderTitle} </option>)}
+                                                </select>
+                                            )}
+                                            {item.type == "Category" && categories != null && (
+                                                <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <option value="null">Not Selected</option>
+                                                    {categories.map((category) => <option value={category.title}> {category.title} </option>)}
+                                                </select>
+                                            )}
 
-                                        }}
+                                            {item.type == "SingleSeries" && singleSeries != null && (
+                                                <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <option value="null">Not Selected</option>
 
-                                        group={{ name: 'groupName', pull: 'clone' }}
-                                        animation={200}
-                                        delayOnTouchStart={true}
-                                        delay={2}
-                                        list={state}
-                                        setList={setState}>
-                                        {state.map((item, key) => (
-                                            <div style={{
-                                                borderRadius: 5,
-                                                background: '#e3e3e3',
-                                                padding: 8,
-                                                textAlign: 'center',
-                                                border: '1px dashed grey',
-                                                margin: 10,
-                                                fontSize: 12,
-                                                color: 'black',
-                                                fontWeight: "bold"
-                                            }} key={item.id}>{item.name}
-                                                <br />
-                                                {item.type == "ImageSlider" && categories != null && (
-                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                        <option value="null">Not Selected</option>
-                                                        {slider?.slider.map((sliders) => <option value={sliders._id}> {sliders.sliderTitle} </option>)}
-                                                    </select>
-                                                )}
-                                                {item.type == "Category" && categories != null && (
-                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                        <option value="null">Not Selected</option>
-                                                        {categories.map((category) => <option value={category.title}> {category.title} </option>)}
-                                                    </select>
-                                                )}
+                                                    {singleSeries.series.map((single) => <option value={single._id}> {single.title} </option>)}
+                                                </select>
+                                            )}
 
-                                                {item.type == "SingleSeries" && singleSeries != null && (
-                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                        <option value="null">Not Selected</option>
+                                            {item.type == "SeriesByGenres" && genres != null && (
+                                                <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: item.name, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <option value="null">Not Selected</option>
 
-                                                        {singleSeries.series.map((single) => <option value={single._id}> {single.title} </option>)}
-                                                    </select>
-                                                )}
-
-                                                {item.type == "SeriesByGenres" && genres != null && (
-                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: item.name, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                        <option value="null">Not Selected</option>
-
-                                                        {genres.map((genre) => <option value={genre._id}> {genre.title} </option>)}
-                                                    </select>
-                                                )}
+                                                    {genres.map((genre) => <option value={genre._id}> {genre.title} </option>)}
+                                                </select>
+                                            )}
 
 
-                                            </div>
-                                        ))}
-                                    </ReactSortable>
-                                </div>
-                                <div>
-                                    <label for="homeTitle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Builder</label>
-                                    <ReactSortable
-                                        style={{
-                                            backgroundColor: "rgba(255,255,255)",
-                                            padding: 10,
+                                        </div>
+                                    ))}
+                                </ReactSortable>
+                            </div>
+                            <div>
+                                <label for="homeTitle" class="block mb-2 mt-5  text-sm font-medium text-gray-900 dark:text-white">Builder</label>
+                                <ReactSortable
+                                    style={{
+                                        backgroundColor: "rgba(255,255,255)",
+                                        padding: 10,
+                                        borderRadius: 5,
+                                    }}
+                                    group={{ name: 'groupName' }}
+                                    animation={200}
+                                    delayOnTouchStart={true}
+                                    delay={2}
+                                    list={currentData == null ? state2 : currentData}
+                                    setList={setCurrentData}>
+                                    {currentData == null ? state2 : currentData.map((item, key) => (
+                                        <div style={{
+                                            width: '100%',
                                             borderRadius: 5,
-                                        }}
-                                        group={{ name: 'groupName' }}
-                                        animation={200}
-                                        delayOnTouchStart={true}
-                                        delay={2}
-                                        list={currentData == null ? state2 : currentData}
-                                        setList={setCurrentData}>
-                                        {currentData == null ? state2 : currentData.map((item, key) => (
-                                            <div style={{
-                                                width: '100%',
-                                                borderRadius: 5,
-                                                background: '#e3e3e3',
-                                                padding: 8,
-                                                textAlign: 'center',
-                                                border: '1px dashed grey',
-                                                fontSize: 12,
-                                                color: 'black',
-                                                marginBottom: 10,
-                                                fontWeight: "bold"
-                                            }} key={item.id}>{item.name + JSON.stringify(item.items)} <button style={{ color: 'red', fontSize: 11, background: 'white', paddingLeft: 2, paddingRight: 2, borderRadius: 5, border: '1px solid grey' }} onClick={() => removeElementAtIndex(key)}>  X</button><br /><img src={'../../p-placeholder.png'} width={'100%'} /> </div>
-                                        ))}
-                                    </ReactSortable>
-                                    {/* <button onClick={() => console.log(state2)}>Submit</button> */}
-                                </div>
-                                {JSON.stringify(currentData)}
-                                {JSON.stringify(currentApps)}
-                                {JSON.stringify(finalApps)}
+                                            background: '#e3e3e3',
+                                            padding: 8,
+                                            textAlign: 'center',
+                                            border: '1px dashed grey',
+                                            fontSize: 12,
+                                            color: 'black',
+                                            marginBottom: 10,
+                                            fontWeight: "bold"
+                                        }} key={item.id}>{item.name + JSON.stringify(item.items)} <button style={{ color: 'red', fontSize: 11, background: 'white', paddingLeft: 2, paddingRight: 2, borderRadius: 5, border: '1px solid grey' }} onClick={() => removeElementAtIndex(key)}>  X</button><br /><img src={'../../p-placeholder.png'} width={'100%'} /> </div>
+                                    ))}
+                                </ReactSortable>
+                                {/* <button onClick={() => console.log(state2)}>Submit</button> */}
                             </div>
+                            {/* {JSON.stringify(currentData)} */}
+                            {JSON.stringify(currentData)}
+                        </div>
 
-                            <div class="sm:col-span-2">
-                                <label for="builderData" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Builder Data</label>
-                                <textarea
-                                    onChange={(e) => setPackageDetails(e.target.value)}
-                                    id="builderData"
-                                    rows="8"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="App description here">
 
-                                </textarea>
-                            </div>
+
+
+                        <div class="sm:col-span-2">
+                            <label for="builderData" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Builder Data</label>
+                            <textarea
+                                onChange={(e) => setPackageDetails(e.target.value)}
+                                id="builderData"
+                                rows="8"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="App description here">
+
+                            </textarea>
                         </div>
                         <button type="submit" onClick={() => { }} class="inline-flex items-center px-5 py-2.5 mt-4 bg-gray-950 hover:bg-gray-800 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
                             Update Builder
