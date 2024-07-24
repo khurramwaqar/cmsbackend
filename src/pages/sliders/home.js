@@ -57,7 +57,7 @@ const HomeSliders = () => {
 
                 {allApps ? allApps.slider.map((app, index) => {
                     return (
-                        <a href={'/builder/edit/' + app._id}>
+                        <a href={'/slider/edit/' + app._id}>
                             <div key={index} className="rounded-md bg-gray-950 shadow-md">
 
                                 <div className="p-6 ">

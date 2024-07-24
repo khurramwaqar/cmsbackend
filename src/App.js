@@ -48,6 +48,7 @@ import HomeSliders from './pages/sliders/home';
 import Subscriptions from './pages/core/subscriptions/Subscriptions';
 import HomeBuilderEditV2 from './pages/builder/EditV2';
 import PositioningCards from './pages/categories/PositioningSeries';
+import SlidersEdit from './pages/sliders/Edit';
 
 const lsCache = localStorage;
 
@@ -142,6 +143,10 @@ const routerDef = [{
 {
   path: "/slider/create",
   element: <SlidersCreate />
+},
+{
+  path: "/slider/edit/:sliderId",
+  element: <SlidersEdit />
 },
 {
   path: "/builder/edit/:id",

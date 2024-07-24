@@ -11,6 +11,7 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { ReactSortable } from "react-sortablejs";
 
 import arrayMove from 'array-move';
+import { useParams } from 'react-router-dom';
 
 const SortableItem = SortableElement(({ value }) => <li>{value}</li>);
 
@@ -24,7 +25,11 @@ const SortableList = SortableContainer(({ items }) => {
     );
 });
 
-const SlidersCreate = () => {
+const SlidersEdit = (props) => { // Pass sliderId as prop
+
+    const params = useParams(props);
+
+    const sliderId = params.sliderId;
 
     const [apps, setApps] = useState(null);
 
@@ -63,12 +68,15 @@ const SlidersCreate = () => {
     const [homeData, setHomeData] = useState(null);
 
     const [status, setStatus] = useState(false);
+
     const sfApps = [];
+    const clApps = [];
 
     const [categories, setCategories] = useState(null);
     const [singleSeries, setSingleSeries] = useState(null);
     const [genres, setGenres] = useState(null);
     const [sliderImage, setSliderImage] = useState(null);
+    const [slider, setSlider] = useState(null); // State for fetched slider data
 
     const handleImg1 = (e, key) => {
         e.preventDefault();
@@ -280,11 +288,46 @@ const SlidersCreate = () => {
                 }
                 setApps(appsHolder);
             });
+
+
+
+
+
             setAppsLoad(false)
 
         }
+        // Fetch slider data when component mounts
+        if (sliderId) {
+            axios.get(`https://node.aryzap.com/api/slider/${sliderId}`)
+                .then((response) => {
+                    //alert(response.data.slider.sliderAppId);
+                    setSlider(response.data.slider); // Set fetched slider data
+                    setHomeTitle(response.data.slider.sliderTitle);
+                    setFinalApps(response.data.slider.sliderAppId); // Update app IDs
+                    setState2(response.data.slider.sliderData); // Update builder data
 
-    });
+                    for (var i = 0; i < response.data.slider.sliderAppId.length; i++) {
+                        // alert(response.data.slider.sliderAppId[i])
+                        appsHolder.filter(app => app.value === response.data.slider.sliderAppId[i]).map(nApp => clApps.push(nApp))
+                    }
+
+                    setSelectedApps(clApps);
+
+                    for (let i = 0; i < clApps.length; i++) {
+                        sfApps.push(clApps[i].value);
+                    }
+                    setFinalApps(sfApps);
+
+                })
+                .catch((error) => {
+                    console.error('Error fetching slider data:', error);
+                });
+
+
+
+        }
+
+    }, [sliderId]); // Dependency array for sliderId
 
     const handleChange = () => {
         setStatus(status);
@@ -309,7 +352,7 @@ const SlidersCreate = () => {
 
         setIsLoading(true);
 
-        const resp = axios.post('https://node.aryzap.com/api/slider', {
+        const resp = axios.put(`https://node.aryzap.com/api/slider/${sliderId}`, { // Use PUT for updating
             sliderTitle: homeTitle,
             sliderAppId: finalApps,
             sliderData: state2
@@ -330,7 +373,7 @@ const SlidersCreate = () => {
 
         toast.promise(resp, {
             loading: 'Builder saving...',
-            success: 'Builder has been successfully added',
+            success: 'Builder has been successfully updated',
             error: 'Found error while saving the builder',
         });
 
@@ -374,12 +417,12 @@ const SlidersCreate = () => {
                 }}
             />
             <div className="text-2xl font-bold pb-2 mb-5  border-b border-b-gray-500 ">
-                Slider <span className='font-extrabold'>{'>'}</span> Add and Slider
+                Slider <span className='font-extrabold'>{'>'}</span> Edit Slider
             </div>
 
             <section class="bg-white dark:bg-gray-600">
                 <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new Slider</h2>
+                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit Slider</h2>
                     <form action="#" onSubmit={handleSubmit} method='POST' enctype="multipart/form-data">
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                             <div class="sm:col-span-2">
@@ -391,7 +434,9 @@ const SlidersCreate = () => {
                                     id="sliderTitle"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Enter the app name and platform name"
-                                    required="" />
+                                    required=""
+                                    value={homeTitle} // Set initial value from slider data
+                                />
                                 <br />
                                 <label for="homeAppId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slider App ID's</label>
                                 {/* <input
@@ -406,7 +451,7 @@ const SlidersCreate = () => {
                                     className='text-black'
                                     value={selectedApps}
                                     onChange={handleChangeApps}
-                                    options={apps}
+                                    options={apps} // Set default selected apps
                                 />
 
                             </div>
@@ -588,7 +633,7 @@ const SlidersCreate = () => {
                             </div>
                         </div>
                         <button type="submit" onClick={() => { }} class="inline-flex items-center px-5 py-2.5 mt-4 bg-gray-950 hover:bg-gray-800 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                            Add an Builder
+                            Update Slider
                         </button>
                     </form >
                 </div >
@@ -597,4 +642,4 @@ const SlidersCreate = () => {
     )
 }
 
-export default SlidersCreate
+export default SlidersEdit
