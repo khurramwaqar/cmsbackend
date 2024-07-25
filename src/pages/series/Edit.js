@@ -415,7 +415,7 @@ const SeriesEdit = (props) => {
                 seiresCDN: inputValues.seiresCDN,
                 imagePoster: `${image1}`,
                 imageCoverMobile: `${image2}`,
-                imageCoverDesktop: `desktop/${image3}`,
+                imageCoverDesktop: `${image3}`,
                 trailer: inputValues.trailer,
                 ost: inputValues.ost,
                 logo: `${image4}`,
