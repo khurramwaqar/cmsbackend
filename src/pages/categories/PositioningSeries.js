@@ -32,7 +32,7 @@ const PositioningCards = (props) => {
     useEffect(() => {
 
         if (isLoad) {
-            axios.get('https://node.aryzap.com/api/series/byCatID/' + params.id).then((resp) => {
+            axios.get('https://node.aryzap.com/api/series/byCatID/' + params.id + '/PK').then((resp) => {
 
                 // Array to store promises for axios requests
                 const promises = [];

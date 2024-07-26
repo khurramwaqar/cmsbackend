@@ -332,7 +332,7 @@ const SeriesEdit = (props) => {
                 setIsLoading(false);
             }).then((resp) => {
                 console.log(resp.data);
-                setImage3(resp.data.imagePath);
+                setImage3('desktop/' + resp.data.imagePath);
                 console.log(image3);
                 setIsLoading(false);
             });
