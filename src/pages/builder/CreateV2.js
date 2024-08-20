@@ -44,7 +44,8 @@ const HomeBuilderCreateV2 = () => {
         { id: 9, name: "Single Series: FullBG", type: "SingleSeries", items: null, data: null, ui: "v4" },
         { id: 10, name: "Selective Series", type: "SelectiveSeries", items: null, data: null, ui: "v1" },
         { id: 11, name: "Selective Genres", type: "SelectiveGenres", items: null, data: null, ui: "v1" },
-        { id: 12, name: "Series By Genres", type: "SeriesByGenres", items: null, data: null, ui: "v1" }
+        { id: 12, name: "Series By Genres", type: "SeriesByGenres", items: null, data: null, ui: "v1" },
+        { id: 13, name: "Promotional Banner", type: "PromotionalBanner", items: null, data: null, ui: "v1" }
     ]);
 
     const [state2, setState2] = useState([]);
@@ -75,6 +76,7 @@ const HomeBuilderCreateV2 = () => {
     const [singleSeries, setSingleSeries] = useState(null);
     const [genres, setGenres] = useState(null);
     const [slider, setSlider] = useState(null);
+    const [promotionalBanner, setPromotionalBanner] = useState(null);
 
 
     const removeElementAtIndex = (indexToRemove) => {
@@ -127,6 +129,18 @@ const HomeBuilderCreateV2 = () => {
                 // create a for loop for each app
                 updateItemAtData(indexToUpdate, { ...state[indexToUpdate], data: updatedItem.items, name: updatedItem.items })
             });
+        } else if (updatedItem.type == "PromotionalBanner") {
+            const series = axios.get('https://node.aryzap.com/api/pb/' + updatedItem.items).catch(error => {
+                alert(error.message);
+            }).then(response => {
+                console.log(response.data.promotionalBanner["_id"]);
+                console.log(response.data.promotionalBanner);
+
+                console.log("Initialize UpDATE ITEM");
+                console.log(updatedItem.ui);
+                //create a for loop for each app
+                updateItemAtData(indexToUpdate, { ...state[indexToUpdate], data: response.data.promotionalBanner["_id"], ui: updatedItem.ui })
+            });
         }
 
         setState(newArray);
@@ -170,18 +184,20 @@ const HomeBuilderCreateV2 = () => {
         if (appsLoad) {
             const fetchData = async () => {
                 try {
-                    const [sliderResponse, categoriesResponse, seriesResponse, genresResponse, appsResponse] = await Promise.all([
+                    const [sliderResponse, categoriesResponse, seriesResponse, genresResponse, appsResponse, promotionalBannerResponse] = await Promise.all([
                         axios.get('https://node.aryzap.com/api/slider'),
                         axios.get('https://node.aryzap.com/api/categories'),
                         axios.get('https://node.aryzap.com/api/series'),
                         axios.get('https://node.aryzap.com/api/genres'),
-                        axios.get('https://node.aryzap.com/api/apps')
+                        axios.get('https://node.aryzap.com/api/apps'),
+                        axios.get('https://node.aryzap.com/api/pb')
                     ]);
 
                     setSlider(sliderResponse.data);
                     setCategories(categoriesResponse.data);
                     setSingleSeries(seriesResponse.data);
                     setGenres(appsResponse.data);
+                    setPromotionalBanner(promotionalBannerResponse.data)
 
                     const appsHolder = appsResponse.data.map(app => ({
                         value: app._id,
@@ -476,6 +492,16 @@ const HomeBuilderCreateV2 = () => {
 
                                                     {genres.map((genre) => <option value={genre._id}> {genre.title} </option>)}
                                                 </select>
+                                            )}
+
+                                            {item.type == "PromotionalBanner" && (
+                                                <>
+                                                    <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                        <option value="null">Not Selected</option>
+                                                        {promotionalBanner?.promotionalBanner.map((sliders) => <option value={sliders._id}> {sliders.title} </option>)}
+                                                    </select>
+
+                                                </>
                                             )}
 
 

@@ -7,5 +7,8 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('react-widgets-tailwind')]
+  plugins: [
+    require('react-widgets-tailwind'),
+    require('tailwind-scrollbar'),
+  ]
 }

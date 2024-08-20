@@ -46,7 +46,9 @@ const HomeBuilderEditV2 = (props) => {
         { id: 9, name: "Single Series: FullBG", type: "SingleSeries", items: null, data: null, ui: "v4" },
         { id: 10, name: "Selective Series", type: "SelectiveSeries", items: null, data: null, ui: "v1" },
         { id: 11, name: "Selective Genres", type: "SelectiveGenres", items: null, data: null, ui: "v1" },
-        { id: 12, name: "Series By Genres", type: "SeriesByGenres", items: null, data: null, ui: "v1" }
+        { id: 12, name: "Series By Genres", type: "SeriesByGenres", items: null, data: null, ui: "v1" },
+        { id: 13, name: "Promotional Banner", type: "PromotionalBanner", items: null, data: null, ui: "v1" }
+
     ]);
 
     const [state2, setState2] = useState([]);
@@ -87,7 +89,7 @@ const HomeBuilderEditV2 = (props) => {
     });
 
     const [slider, setSlider] = useState(null);
-
+    const [promotionalBanner, setPromotionalBanner] = useState(null);
     const removeElementAtIndex = (indexToRemove) => {
         // Using filter to create a new array without the element at the specified index
         const newArray = currentData.filter((item, index) => index !== indexToRemove);
@@ -135,6 +137,15 @@ const HomeBuilderEditV2 = (props) => {
                 console.log(response.data);
                 // create a for loop for each app
                 updateItemAtData(indexToUpdate, { ...state[indexToUpdate], data: updatedItem.items, name: updatedItem.items })
+            });
+        }
+        else if (updatedItem.type == "PromotionalBanner") {
+            const series = axios.get('https://node.aryzap.com/api/pb/' + updatedItem.items).catch(error => {
+                alert(error.message);
+            }).then(response => {
+                console.log(response.data.promotionalBanner);
+                //create a for loop for each app
+                updateItemAtData(indexToUpdate, { ...state[indexToUpdate], data: response.data.promotionalBanner._id })
             });
         }
 
@@ -195,6 +206,14 @@ const HomeBuilderEditV2 = (props) => {
                 console.log(response.data);
                 // create a for loop for each app
                 setSlider(response.data);
+            });
+
+            const promotionalRequest = axios.get('https://node.aryzap.com/api/pb').catch(error => {
+                alert(error.message);
+            }).then(response => {
+                console.log(response.data.promotionalBanner);
+                // create a for loop for each app
+                setPromotionalBanner(response.data.promotionalBanner);
             });
 
             const crData = axios.get(`https://node.aryzap.com/api/home/${params.id}`).catch(error => {
@@ -464,6 +483,12 @@ const HomeBuilderEditV2 = (props) => {
                                                     <option value="null">Not Selected</option>
 
                                                     {genres.map((genre) => <option value={genre._id}> {genre.title} </option>)}
+                                                </select>
+                                            )}
+                                            {item.type == "PromotionalBanner" && categories != null && (
+                                                <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: e.target.value, ui: state[key].ui })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                    <option value="null">Not Selected</option>
+                                                    {promotionalBanner?.map((sliders) => <option value={sliders._id}> {sliders.title} </option>)}
                                                 </select>
                                             )}
 

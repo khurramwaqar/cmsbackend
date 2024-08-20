@@ -49,6 +49,8 @@ import Subscriptions from './pages/core/subscriptions/Subscriptions';
 import HomeBuilderEditV2 from './pages/builder/EditV2';
 import PositioningCards from './pages/categories/PositioningSeries';
 import SlidersEdit from './pages/sliders/Edit';
+import PromotionalBanner from './pages/promotional/PromotionalHome';
+import PromotionalCreate from './pages/promotional/PromotionalCreate';
 
 const lsCache = localStorage;
 
@@ -187,6 +189,14 @@ const routerDef = [{
 {
   path: "/genres/create",
   element: <GenresCreate />
+},
+{
+  path: "/pb",
+  element: <PromotionalBanner />
+},
+{
+  path: "/pb/create",
+  element: <PromotionalCreate />
 },
 {
   path: "/ages",

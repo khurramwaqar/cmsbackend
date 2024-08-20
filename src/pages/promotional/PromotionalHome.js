@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import fs from 'fs';
 import axios from 'axios';
-import { InfinitySpin } from 'react-loader-spinner';
-import { CursorArrowRippleIcon } from '@heroicons/react/24/outline'
-import { ShimmerButton, ShimmerSectionHeader, ShimmerPostItem, ShimmerCircularImage, ShimmerCategoryItem } from 'react-shimmer-effects';
-const Apps = () => {
+import { CursorArrowRippleIcon, ArrowRightCircleIcon } from '@heroicons/react/24/outline'
+import { ShimmerCategoryItem } from 'react-shimmer-effects';
+const PromotionalBanner = () => {
 
     const [colors, setColors] = useState(null);
     const [file, setFile] = useState(null);
@@ -15,7 +14,7 @@ const Apps = () => {
 
     useEffect(() => {
         if (isLoad) {
-            axios.get('https://node.aryzap.com/api/apps').then((resp) => {
+            axios.get('https://node.aryzap.com/api/pb').then((resp) => {
                 console.log(resp.data);
                 setAllApps(resp.data);
             });
@@ -30,10 +29,10 @@ const Apps = () => {
 
         <>
             <div className="text-2xl font-bold pb-2 mb-5  border-b border-b-gray-500 ">
-                Apps
+                Promotional Banner
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-                <a href="/apps/create">
+                <a href="/pb/create">
                     <div className={"rounded-md hover:bg-gray-950 bg-blue-950 animate-pulse"}>
 
                         <div className="p-6 ">
@@ -41,35 +40,34 @@ const Apps = () => {
                                 <div className="flex-shrink-0">
 
 
-                                    <CursorArrowRippleIcon width={30} color='orange' />
+                                    <CursorArrowRippleIcon width={30} color='lightgreen' />
 
                                     <h2 className="text-sm font-bold mt-2">
-                                        Add an App +
+                                        Add an Promotional Banner +
                                     </h2>
                                     <p className='text-xs font-light w-52'>
-                                        Add a new app, type your bundle identifier and platforms details
+                                        Drama. Stories composed in verse or prose, usually for theatrical performance, where conflicts and emotion are expressed through dialogue and action.
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </a>
-                {allApps ? allApps.map((app, index) => {
+                {allApps ? allApps.promotionalBanner.map((app, index) => {
                     return (
-                        <div key={index} className="rounded-md bg-gray-950 shadow-md">
+                        <div key={index} className={"rounded-md bg-gray-950"}>
 
                             <div className="p-6 ">
                                 <div className="flex items-center">
                                     <div className="flex-shrink-0">
 
-                                        <img src={"https://node.aryzap.com/public/" + app.image} className="w-5 h-5" />
 
+                                        <ArrowRightCircleIcon width={24} />
                                         <h2 className="text-sm font-bold mt-2">
                                             {app.title}
                                         </h2>
-                                        <p className='text-xs font-light'>
-                                            <span>Bundle: {app.bundleId}</span><br />
-                                            <span>Platform: {app.platform}</span>
+                                        <p className='text-xs font-light text-clip w-56'>
+                                            {app.description}
                                         </p>
                                     </div>
                                 </div>
@@ -80,31 +78,31 @@ const Apps = () => {
 
                     <>
 
-                        <div className="bg-gray-800 rounded-md pl-5 pt-5 shadow-md">
+                        <div className="bg-gray-800 rounded-md pl-5 pt-5">
 
                             <ShimmerCategoryItem title={false} />
                         </div>
-                        <div className="bg-gray-800 rounded-md pl-5 pt-5 shadow-md">
+                        <div className="bg-gray-800 rounded-md pl-5 pt-5">
 
                             <ShimmerCategoryItem title={false} />
                         </div>
-                        <div className="bg-gray-800 rounded-md pl-5 pt-5 shadow-md">
+                        <div className="bg-gray-800 rounded-md pl-5 pt-5">
 
                             <ShimmerCategoryItem title={false} />
                         </div>
-                        <div className="bg-gray-800 rounded-md pl-5 pt-5 shadow-md">
+                        <div className="bg-gray-800 rounded-md pl-5 pt-5">
 
                             <ShimmerCategoryItem title={false} />
                         </div>
-                        <div className="bg-gray-800 rounded-md pl-5 pt-5 shadow-md">
+                        <div className="bg-gray-800 rounded-md pl-5 pt-5">
 
                             <ShimmerCategoryItem title={false} />
                         </div>
-                        <div className="bg-gray-800 rounded-md pl-5 pt-5 shadow-md">
+                        <div className="bg-gray-800 rounded-md pl-5 pt-5">
 
                             <ShimmerCategoryItem title={false} />
                         </div>
-                        <div className="bg-gray-800 rounded-md pl-5 pt-5 shadow-md">
+                        <div className="bg-gray-800 rounded-md pl-5 pt-5">
 
                             <ShimmerCategoryItem title={false} />
                         </div>
@@ -120,4 +118,4 @@ const Apps = () => {
     )
 }
 
-export default Apps
+export default PromotionalBanner
