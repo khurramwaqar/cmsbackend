@@ -88,7 +88,7 @@ const SeriesEdit = (props) => {
     const [appId, setAppId] = useState(false);
     const [casts, setCasts] = useState(null);
     const [editData, setEditData] = useState(null);
-    const [isVideoIs, setIsVideoIs] = useState(false);
+    const [isVideoIs, setIsVideoIs] = useState(null);
 
 
     const eAppsHolder = [];
@@ -756,13 +756,16 @@ const SeriesEdit = (props) => {
                                     onChange={(e) => setInputValues({ ...inputValues, seriesType: e.target.value })}
                                 />
                             </div>
-                            <div>
-                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
-                                <Toggle
-                                    defaultChecked={isVideoIs}
-                                    onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
+                            {isVideoIs != null && (
+                                <div>
+                                    <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
+                                    <Toggle
+                                        defaultChecked={isVideoIs}
+                                        onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
 
-                            </div>
+                                </div>
+                            )}
+
                         </div>
                         <div class="mb-6">
                             <label for="s_portraitImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Cast</label>
