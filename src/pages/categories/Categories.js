@@ -3,6 +3,7 @@ import fs, { rename } from 'fs';
 import axios from 'axios';
 import { CursorArrowRippleIcon, ArrowRightCircleIcon } from '@heroicons/react/24/outline'
 import { ShimmerCategoryItem } from 'react-shimmer-effects';
+import { Link } from 'react-router-dom';
 const Categories = () => {
 
     const [colors, setColors] = useState(null);
@@ -16,7 +17,7 @@ const Categories = () => {
 
     useEffect(() => {
         if (isLoad) {
-            axios.get('https://node.aryzap.com/api/categories').then(async (resp) => {
+            axios.get('https://node.aryzap.com/api/categories/bkend').then(async (resp) => {
 
                 // Array to store promises for axios requests
                 const promises = [];
@@ -85,14 +86,18 @@ const Categories = () => {
                                 <div className="flex items-center">
                                     <div className="flex-shrink-0">
 
+                                        <Link to={`edit/${app._id}`}>
 
-                                        <ArrowRightCircleIcon width={24} />
-                                        <h2 className="text-sm font-bold mt-2">
-                                            {app.title}
-                                        </h2>
-                                        <p className='text-xs font-light text-clip w-56'>
-                                            {app._id}
-                                        </p>
+
+                                            <ArrowRightCircleIcon width={24} />
+                                            <h2 className="text-sm font-bold mt-2">
+                                                {app.title}
+                                            </h2>
+                                            <p className='text-xs font-light text-clip w-56'>
+                                                {app._id}
+                                            </p>
+
+                                        </Link>
 
                                     </div>
                                 </div>

@@ -52,6 +52,7 @@ import SlidersEdit from './pages/sliders/Edit';
 import PromotionalBanner from './pages/promotional/PromotionalHome';
 import PromotionalCreate from './pages/promotional/PromotionalCreate';
 import DMEpisode from './pages/dmepisode/Episode';
+import CategoriesEdit from './pages/categories/Edit';
 
 const lsCache = localStorage;
 
@@ -226,6 +227,10 @@ const routerDef = [{
 {
   path: "/categories/create",
   element: <CategoriesCreate />
+},
+{
+  path: "/categories/edit/:categoryId",
+  element: <CategoriesEdit />
 },
 {
   path: "/series",

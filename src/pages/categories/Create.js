@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import fs from 'fs';
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
-
+import Toggle from 'react-toggle'
 const CategoriesCreate = () => {
 
     const [apps, setApps] = useState(null);
@@ -14,6 +14,7 @@ const CategoriesCreate = () => {
     const [genreTitle, setGenreTitle] = useState(false);
     const [genreDesc, setGenreDesc] = useState(false);
     const [appId, setAppId] = useState(false);
+    const [isPublished, setIsPublished] = useState(null);
 
     useEffect(() => {
         if (appsLoad) {
@@ -70,7 +71,8 @@ const CategoriesCreate = () => {
                             title: genreTitle,
                             description: genreDesc,
                             image: resp.data.imagePath,
-                            appId: appId
+                            appId: appId,
+                            published: isPublished
                         }).catch((error) => {
                             console.log(error);
                             return alert(JSON.stringify(error));
@@ -164,7 +166,22 @@ const CategoriesCreate = () => {
 
 
                             </div>
+                            <div>
+                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">If you want to visible this category on devices please toggle the below button</label>
+                                <Toggle
+                                    defaultChecked={isPublished}
+                                    onChange={() => { if (isPublished == true) { setIsPublished(false); } else { setIsPublished(true); } }} />
 
+                            </div>
+                            {/* {isPublished != null && (
+                                <div>
+                                    <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
+                                    <Toggle
+                                        defaultChecked={isPublished}
+                                        onChange={() => { if (isPublished == true) { setIsPublished(false); } else { setIsPublished(true); } }} />
+
+                                </div>
+                            )} */}
                             <div class="sm:col-span-2">
                                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                                 <textarea
