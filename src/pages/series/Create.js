@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+
+
 import fs from 'fs';
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
@@ -7,6 +9,10 @@ import { useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { Toaster, toast } from 'react-hot-toast';
 import { Multiselect } from 'react-widgets';
+import Toggle from 'react-toggle'
+import { ArrowRightCircleIcon, ChevronDoubleUpIcon, ChevronUpIcon, CircleStackIcon, CloudArrowUpIcon, CodeBracketIcon, CursorArrowRippleIcon, DocumentIcon, InboxStackIcon, PencilSquareIcon, PlayCircleIcon, PlayIcon, ShieldCheckIcon, Square2StackIcon, TvIcon } from '@heroicons/react/24/outline';
+
+
 const SeriesCreate = () => {
 
 
@@ -37,6 +43,7 @@ const SeriesCreate = () => {
     const [genreDesc, setGenreDesc] = useState(false);
     const [appId, setAppId] = useState(false);
     const [casts, setCasts] = useState(null);
+    const [isVideoIs, setIsVideoIs] = useState(false);
 
 
     const handleImg1 = (e) => {
@@ -231,7 +238,8 @@ const SeriesCreate = () => {
                 status: "published",
                 geoPolicy: singleGeop,
                 adsManager: data.seriesAds,
-                seriesType: data.seriesType
+                seriesType: data.seriesType,
+                isDM: isVideoIs
             }).catch((error) => {
 
                 return console.log(error);
@@ -550,6 +558,14 @@ const SeriesCreate = () => {
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Series Type: show|live|singleVideo|webview"
                                     required />
+
+                            </div>
+                            <div>
+                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
+                                <Toggle
+                                    defaultChecked={isVideoIs}
+                                    onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
+
                             </div>
                         </div>
                         <div class="mb-6">

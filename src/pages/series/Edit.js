@@ -9,6 +9,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { Multiselect } from 'react-widgets';
 import { RadioGroup, RadioButton, ReversedRadioButton } from 'react-radio-buttons';
+import Toggle from 'react-toggle'
 
 const SeriesEdit = (props) => {
 
@@ -87,6 +88,7 @@ const SeriesEdit = (props) => {
     const [appId, setAppId] = useState(false);
     const [casts, setCasts] = useState(null);
     const [editData, setEditData] = useState(null);
+    const [isVideoIs, setIsVideoIs] = useState(false);
 
 
     const eAppsHolder = [];
@@ -135,6 +137,7 @@ const SeriesEdit = (props) => {
                 setImage2(res.data.imageCoverMobile);
                 setImage3(res.data.imageCoverDesktop);
                 setImage4(res.data.logo);
+                setIsVideoIs(res.data.isDM);
 
                 for (let i = 0; i < res.data.genreId?.length; i++) {
                     eGenresHolder.push({
@@ -429,6 +432,7 @@ const SeriesEdit = (props) => {
                 geoPolicy: singleGeop,
                 adsManager: singleAd,
                 seriesType: inputValues.seriesType,
+                isDM: isVideoIs
             }).catch((error) => {
 
                 return console.log(error);
@@ -751,6 +755,13 @@ const SeriesEdit = (props) => {
                                     placeholder="Series Type: show|live|singleVideo|webview"
                                     onChange={(e) => setInputValues({ ...inputValues, seriesType: e.target.value })}
                                 />
+                            </div>
+                            <div>
+                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
+                                <Toggle
+                                    defaultChecked={isVideoIs}
+                                    onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
+
                             </div>
                         </div>
                         <div class="mb-6">

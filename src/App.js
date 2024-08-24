@@ -51,6 +51,7 @@ import PositioningCards from './pages/categories/PositioningSeries';
 import SlidersEdit from './pages/sliders/Edit';
 import PromotionalBanner from './pages/promotional/PromotionalHome';
 import PromotionalCreate from './pages/promotional/PromotionalCreate';
+import DMEpisode from './pages/dmepisode/Episode';
 
 const lsCache = localStorage;
 
@@ -249,6 +250,10 @@ const routerDef = [{
 {
   path: "/ytepisodes",
   element: <YTEpisode />
+},
+{
+  path: "/dmepisodes",
+  element: <DMEpisode />
 },
 {
   path: "/settings",

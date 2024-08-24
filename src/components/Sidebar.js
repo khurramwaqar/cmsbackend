@@ -138,6 +138,13 @@ const Sidebar = () => {
                               <span class="ml-3 font-medium">Promotional Banners </span>
                             </a>
                           </li>
+                          <li className='bg-gray-900 rounded-md dark:hover:bg-red-700 group'>
+                            <a href="/dmepisodes" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-red-700 group">
+                              <QueueListIcon width={20} />
+
+                              <span class="ml-3 font-medium">DM Episodes </span>
+                            </a>
+                          </li>
                         </> : "Not Found !")}
 
               {/* <li className='bg-gray-800 rounded-sm dark:hover:bg-red-700 group'>
