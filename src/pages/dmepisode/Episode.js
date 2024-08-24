@@ -20,7 +20,7 @@ const DMEpisode = () => {
     const onSubmit = () => {
 
         console.log(finalSeries);
-        const response = axios.get(`http://127.0.0.1:3001/api/dm/${finalSeries._id}/${finalSeries.seriesDM}/1/100`).then((response) => {
+        const response = axios.get(`https://node.aryzap.com/api/dm/${finalSeries._id}/${finalSeries.seriesDM}/1/100`).then((response) => {
         });
         toast.promise(response, {
             loading: 'Loading...',
@@ -44,7 +44,7 @@ const DMEpisode = () => {
                 setFinalSeries(res.data)
 
             });
-        const response = axios.get(`http://localhost:3001/api/dm/${e.target.value}`)
+        const response = axios.get(`https://node.aryzap.com/api/dm/${e.target.value}`)
             .then(res => {
 
                 setSeries(res.data);
@@ -89,7 +89,7 @@ const DMEpisode = () => {
                 setAllSeries(response.data.series);
                 console.log(allSeries);
             });
-            const response = axios.get('http://localhost:3001/api/dm/')
+            const response = axios.get('https://node.aryzap.com/api/dm/')
                 .then(res => {
                     //console.log(res.data);
                     setSeries(res.data)
