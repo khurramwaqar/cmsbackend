@@ -201,7 +201,7 @@ const DMEpisode = () => {
                         <div
                             className={`rounded-md h-40 relative overflow-hidden block z-10 before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-transparent before:opacity-30 before:z-[-5]  bg-cover `}
                             style={{
-                                backgroundImage: `url(${app.thumbnail_180_url})`
+                                backgroundImage: `url(${app.imagePath})`
                             }}>
                             <div className="absolute inset-0 z-10 text-center flex flex-row  opacity-0 hover:opacity-100  duration-300">
                                 <a href={`ytepisode/edit/${app._id}`} class="bg-opacity-70 hover:bg-opacity-60 w-1/2 hover:bg-green-600 bg-green-950 h-40 ">
