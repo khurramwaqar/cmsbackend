@@ -196,7 +196,7 @@ const DMEpisode = () => {
 
 
 
-                {series ? series?.episodes?.map((app, index) => {
+                {series ? series?.episode?.map((app, index) => {
                     return (
                         <div
                             className={`rounded-md h-40 relative overflow-hidden block z-10 before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-transparent before:opacity-30 before:z-[-5]  bg-cover `}
