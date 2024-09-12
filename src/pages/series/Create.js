@@ -240,7 +240,7 @@ const SeriesCreate = () => {
                 adsManager: data.seriesAds,
                 seriesType: data.seriesType,
                 isDM: isVideoIs,
-                seiresCDNWeb: data.seriesCDNWebLink,
+                seiresCDNWeb: data.seiresCDNWebLink,
                 seiresCDNWebKey: data.seiresCDNWebKey
             }).catch((error) => {
 
@@ -574,7 +574,7 @@ const SeriesCreate = () => {
                                 <input
                                     type="text"
                                     id="s_cdn_linkWeb"
-                                    {...register("seriesCDNWebLink")}
+                                    {...register("seiresCDNWebLink")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder=".m3u/.mp4/.mpd"
                                 />
@@ -584,7 +584,7 @@ const SeriesCreate = () => {
                                 <input
                                     type="text"
                                     id="s_cdn_linkWebKey"
-                                    {...register("seriesCDNWebKey")}
+                                    {...register("seiresCDNWebKey")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="nzvspakweb2024"
                                 />

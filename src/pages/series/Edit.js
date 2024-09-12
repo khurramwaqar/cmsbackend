@@ -108,7 +108,7 @@ const SeriesEdit = (props) => {
         seriesDM: '',
         seriesYT: '',
         seiresCDN: '',
-        seriesCDNWebLink: '',
+        seiresCDNWebLink: '',
         seiresCDNWebKey: '',
         imagePoster: '',
         imageCoverMobile: '',
@@ -187,7 +187,7 @@ const SeriesEdit = (props) => {
                     seriesYT: res.data.seriesYT,
                     seiresCDN: res.data.seiresCDN,
                     seiresCDNWebKey: res.data.seiresCDNWebKey,
-                    seriesCDNWebLink: res.data.seriesCDNWebLink,
+                    seiresCDNWebLink: res.data.seiresCDNWebLink,
                     imagePoster: res.data.imagePoster,
                     imageCoverMobile: res.data.imageCoverMobile,
                     imageCoverDesktop: res.data.imageCoverDesktop,
@@ -437,7 +437,7 @@ const SeriesEdit = (props) => {
                 adsManager: singleAd,
                 seriesType: inputValues.seriesType,
                 isDM: isVideoIs,
-                seiresCDNWeb: inputValues.seriesCDNWebLink,
+                seiresCDNWeb: inputValues.seiresCDNWebLink,
                 seiresCDNWebKey: inputValues.seiresCDNWebKey
             }).catch((error) => {
 
@@ -777,10 +777,10 @@ const SeriesEdit = (props) => {
                                 <input
                                     type="text"
                                     id="s_cdn_link_web"
-                                    defaultValue={inputValues?.seriesCDNWebLink}
+                                    defaultValue={inputValues?.seiresCDNWebLink}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder=".m3u/.mp4/.mpd"
-                                    onChange={(e) => setInputValues({ ...inputValues, seriesCDNWebLink: e.target.value })}
+                                    onChange={(e) => setInputValues({ ...inputValues, seiresCDNWebLink: e.target.value })}
                                 />
                             </div>
 
