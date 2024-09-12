@@ -240,7 +240,7 @@ const SeriesCreate = () => {
                 adsManager: data.seriesAds,
                 seriesType: data.seriesType,
                 isDM: isVideoIs,
-                seiresCDNWeb: data.seiresCDNWebLink,
+                seiresCDNWebLink: data.seiresCDNWebLink,
                 seiresCDNWebKey: data.seiresCDNWebKey
             }).catch((error) => {
 

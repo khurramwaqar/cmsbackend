@@ -437,7 +437,7 @@ const SeriesEdit = (props) => {
                 adsManager: singleAd,
                 seriesType: inputValues.seriesType,
                 isDM: isVideoIs,
-                seiresCDNWeb: inputValues.seiresCDNWebLink,
+                seiresCDNWebLink: inputValues.seiresCDNWebLink,
                 seiresCDNWebKey: inputValues.seiresCDNWebKey
             }).catch((error) => {
 
