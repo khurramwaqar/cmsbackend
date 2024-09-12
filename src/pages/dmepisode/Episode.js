@@ -27,10 +27,6 @@ const DMEpisode = () => {
             success: 'Episodes fetched successfully',
             error: 'Found some errors while deleting...',
         });
-
-
-
-
     }
 
     const seriesHolder = [];

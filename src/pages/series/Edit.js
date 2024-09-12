@@ -108,6 +108,8 @@ const SeriesEdit = (props) => {
         seriesDM: '',
         seriesYT: '',
         seiresCDN: '',
+        seriesCDNWebLink: '',
+        seiresCDNWebKey: '',
         imagePoster: '',
         imageCoverMobile: '',
         imageCoverDesktop: '',
@@ -184,6 +186,8 @@ const SeriesEdit = (props) => {
                     seriesDM: res.data.seriesDM,
                     seriesYT: res.data.seriesYT,
                     seiresCDN: res.data.seiresCDN,
+                    seiresCDNWebKey: res.data.seiresCDNWebKey,
+                    seriesCDNWebLink: res.data.seriesCDNWebLink,
                     imagePoster: res.data.imagePoster,
                     imageCoverMobile: res.data.imageCoverMobile,
                     imageCoverDesktop: res.data.imageCoverDesktop,
@@ -432,7 +436,9 @@ const SeriesEdit = (props) => {
                 geoPolicy: singleGeop,
                 adsManager: singleAd,
                 seriesType: inputValues.seriesType,
-                isDM: isVideoIs
+                isDM: isVideoIs,
+                seiresCDNWeb: inputValues.seriesCDNWebLink,
+                seiresCDNWebKey: inputValues.seiresCDNWebKey
             }).catch((error) => {
 
                 return console.log(error);
@@ -765,6 +771,30 @@ const SeriesEdit = (props) => {
 
                                 </div>
                             )}
+
+                            <div>
+                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Link</label>
+                                <input
+                                    type="text"
+                                    id="s_cdn_link_web"
+                                    defaultValue={inputValues?.seriesCDNWebLink}
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder=".m3u/.mp4/.mpd"
+                                    onChange={(e) => setInputValues({ ...inputValues, seriesCDNWebLink: e.target.value })}
+                                />
+                            </div>
+
+                            <div>
+                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Key</label>
+                                <input
+                                    type="text"
+                                    id="s_cdn_link_web_key"
+                                    defaultValue={inputValues?.seiresCDNWebKey}
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="nzvspak2024"
+                                    onChange={(e) => setInputValues({ ...inputValues, seiresCDNWebKey: e.target.value })}
+                                />
+                            </div>
 
                         </div>
                         <div class="mb-6">

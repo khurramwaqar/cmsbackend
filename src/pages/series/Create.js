@@ -239,7 +239,9 @@ const SeriesCreate = () => {
                 geoPolicy: singleGeop,
                 adsManager: data.seriesAds,
                 seriesType: data.seriesType,
-                isDM: isVideoIs
+                isDM: isVideoIs,
+                seiresCDNWeb: data.seriesCDNWebLink,
+                seiresCDNWebKey: data.seiresCDNWebKey
             }).catch((error) => {
 
                 return console.log(error);
@@ -567,6 +569,27 @@ const SeriesCreate = () => {
                                     onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
 
                             </div>
+                            <div>
+                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN  WEB Link</label>
+                                <input
+                                    type="text"
+                                    id="s_cdn_linkWeb"
+                                    {...register("seriesCDNWebLink")}
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder=".m3u/.mp4/.mpd"
+                                />
+                            </div>
+                            <div>
+                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Key</label>
+                                <input
+                                    type="text"
+                                    id="s_cdn_linkWebKey"
+                                    {...register("seriesCDNWebKey")}
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="nzvspakweb2024"
+                                />
+                            </div>
+
                         </div>
                         <div class="mb-6">
                             <label for="s_portraitImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Cast</label>
