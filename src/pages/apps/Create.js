@@ -155,13 +155,13 @@ const AppsCreate = () => {
                 }}
             />
 
-            <section class="bg-white dark:bg-gray-600">
+            <section class="bg-gray-600">
                 <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new App</h2>
+                    <h2 class="mb-4 text-xl font-bold text-white">Add a new App</h2>
                     <form action="#" onSubmit={handleSubmit} method='POST'>
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                             <div class="sm:col-span-2">
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">App Name</label>
+                                <label for="name" class="block mb-2 text-sm font-medium text-white">App Name</label>
                                 <input
                                     onChange={(e) => setAppTitle(e.target.value)}
                                     type="text"
@@ -172,7 +172,7 @@ const AppsCreate = () => {
                                     required="" />
                             </div>
                             <div class="w-full">
-                                <label for="bundle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bundle Id</label>
+                                <label for="bundle" class="block mb-2 text-sm font-medium text-white">Bundle Id</label>
                                 <input
                                     onChange={(e) => setAppBundle(e.target.value)}
                                     type="text"
@@ -183,7 +183,7 @@ const AppsCreate = () => {
                                     required="" />
                             </div>
                             <div class="w-full">
-                                <label for="platform" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Platform Name</label>
+                                <label for="platform" class="block mb-2 text-sm font-medium text-white">Platform Name</label>
                                 <input
                                     onChange={(e) => setAppPlatform(e.target.value)}
                                     type="text"
@@ -194,7 +194,7 @@ const AppsCreate = () => {
                                     required="" />
                             </div>
                             <div className='sm:col-span-2'>
-                                <label for="item-weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">App Image Upload</label>
+                                <label for="item-weight" class="block mb-2 text-sm font-medium text-white">App Image Upload</label>
                                 <input
                                     onChange={(e) => handleImageChange(e)}
                                     className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-600 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300"
@@ -209,7 +209,7 @@ const AppsCreate = () => {
                                 /> : ""}
                             </div>
                             <div class="sm:col-span-2">
-                                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                <label for="description" class="block mb-2 text-sm font-medium text-white">Description</label>
                                 <textarea
                                     onChange={(e) => setAppDesc(e.target.value)}
                                     id="description"

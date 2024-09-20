@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import fs from 'fs';
 import axios from 'axios';
-import { InfinitySpin } from 'react-loader-spinner';
 import { TagsInput } from "react-tag-input-component";
 import { useForm } from 'react-hook-form';
 import Select from 'react-select';
@@ -13,12 +12,9 @@ import Toggle from 'react-toggle'
 
 const SeriesEdit = (props) => {
 
-
-
     const sfApps = [];
     const sfCatfegories = [];
     const sfGenres = [];
-
     const sfAppsX = [];
     const sfCatfegoriesX = [];
     const sfGenresX = [];
@@ -100,6 +96,7 @@ const SeriesEdit = (props) => {
     const genresHolder = [];
     const categoriesHolder = [];
 
+
     const [inputValues, setInputValues] = useState({
         cast: Array(),
         title: '',
@@ -130,6 +127,13 @@ const SeriesEdit = (props) => {
 
     useEffect(() => {
         if (isLoading) {
+
+
+
+
+
+
+
 
             axios.get(`https://node.aryzap.com/api/series/${params.id}`).catch(err => {
                 console.log(err);
@@ -206,13 +210,13 @@ const SeriesEdit = (props) => {
 
                 setSingleAd(res.data.adsManager);
                 setSingleGeop(res.data.geoPolicy._id);
+                setCasts(res.data.cast)
 
             })
             setIsLoading(false);
 
         }
     });
-
     const handleOnSubmitGenres = () => {
         // handleOnSubmitGenres(eGenres);
 
@@ -416,7 +420,7 @@ const SeriesEdit = (props) => {
             const respC = axios.put('https://node.aryzap.com/api/series/' + params.id, {
                 title: inputValues.title,
                 description: inputValues.description,
-                cast: inputValues.cast,
+                cast: casts,
                 seriesDM: inputValues.seriesDM,
                 seriesYT: inputValues.seriesYT,
                 seiresCDN: inputValues.seiresCDN,
@@ -574,70 +578,6 @@ const SeriesEdit = (props) => {
     };
 
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     setIsLoading(true);
-
-    //     const formData = new FormData();
-    //     formData.append('file', file);
-
-    //     try {
-    //         const response = await axios.post('https://node.aryzap.com/api/media/upload', formData, {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data', // Ensure proper content type for file upload
-    //             },
-    //         }).catch((err) => {
-    //             console.log(err);
-    //             setIsLoading(false);
-    //         }).then((resp) => {
-    //             console.log(resp.data);
-    //             setImgPath(resp.data.imagePath);
-    //             setIsLoading(false);
-
-    //             if (resp.data.imagePath != null) {
-    //                 if (genreTitle != null) {
-    //                     axios.post('https://node.aryzap.com/api/categories', {
-    //                         title: genreTitle,
-    //                         description: genreDesc,
-    //                         image: resp.data.imagePath,
-    //                         appId: appId
-    //                     }).catch((error) => {
-    //                         console.log(error);
-    //                         return alert(JSON.stringify(error));
-
-    //                     }).then((response) => {
-    //                         console.log(response);
-
-    //                         if (response.status === 200) {
-    //                             alert("Your Category has been successfully added");
-    //                         }
-    //                         // return window.location.reload();
-    //                     });
-
-    //                 } else {
-    //                     return alert("Please check your fields");
-    //                 }
-    //             }
-
-
-
-
-    //         });
-    //         console.log(response.data);
-    //         if (response.status === 200) {
-    //             console.log('File uploaded successfully');
-    //         } else {
-    //             console.error('File upload failed');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error uploading file:', error);
-    //         setIsLoading(false);
-    //     }
-
-
-
-    // }
 
 
 
@@ -801,12 +741,13 @@ const SeriesEdit = (props) => {
                             <label for="s_portraitImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Cast</label>
                             <TagsInput
                                 classNames={{ tag: "text-gray-950", input: "text-black" }}
-                                value={inputValues?.cast}
+                                value={inputValues.cast}
                                 onChange={setCasts}
                                 name="casts"
                                 placeHolder="Series Cast"
 
                             />
+
                         </div>
                         <div class="grid gap-6 mb-6 md:grid-cols-3">
                             <div class="mb-6">
@@ -1054,5 +995,4 @@ const SeriesEdit = (props) => {
         </>
     )
 }
-
 export default SeriesEdit

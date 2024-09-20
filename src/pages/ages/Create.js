@@ -123,13 +123,13 @@ const AgesCreate = () => {
                 Age Ratings <span className='font-extrabold'>{'>'}</span> Add and Age Ratings
             </div>
 
-            <section class="bg-white dark:bg-gray-600">
+            <section class="bg-gray-600">
                 <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new Age Ratings</h2>
+                    <h2 class="mb-4 text-xl font-bold text-white">Add a new Age Ratings</h2>
                     <form action="#" onSubmit={handleSubmit} method='POST'>
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                             <div class="sm:col-span-2">
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age Name</label>
+                                <label for="name" class="block mb-2 text-sm font-medium text-white">Age Name</label>
                                 <input
                                     onChange={(e) => setGenreTitle(e.target.value)}
                                     type="text"
@@ -140,7 +140,7 @@ const AgesCreate = () => {
                                     required="" />
                             </div>
                             <div class="w-full">
-                                <label for="bundle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age Rating Image</label>
+                                <label for="bundle" class="block mb-2 text-sm font-medium text-white">Age Rating Image</label>
                                 <input
                                     onChange={(e) => handleImageChange(e)}
                                     className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-600 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300"
@@ -155,7 +155,7 @@ const AgesCreate = () => {
                                 /> : ""}
                             </div>
                             <div class="w-full">
-                                <label for="platform" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">App ID</label>
+                                <label for="platform" class="block mb-2 text-sm font-medium text-white">App ID</label>
                                 <select onChange={(e) => setAppId(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     {apps != null && apps.map((app, index) => {
                                         return <option value={app._id}> {app.title} </option>
@@ -167,7 +167,7 @@ const AgesCreate = () => {
                             </div>
 
                             <div class="sm:col-span-2">
-                                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                <label for="description" class="block mb-2 text-sm font-medium text-white">Description</label>
                                 <textarea
                                     onChange={(e) => setGenreDesc(e.target.value)}
                                     id="description"
