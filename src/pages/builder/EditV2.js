@@ -114,7 +114,7 @@ const HomeBuilderEditV2 = (props) => {
             }).then(response => {
                 console.log(response.data);
                 //create a for loop for each app
-                updateItemAtData(indexToUpdate, { ...state[indexToUpdate], data: response.data })
+                updateItemAtData(indexToUpdate, { ...state[indexToUpdate], data: response.data.slider["_id"] })
             });
         }
         else if (updatedItem.type == "SingleSeries") {
