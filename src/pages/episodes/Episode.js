@@ -47,10 +47,10 @@ const Episode = () => {
 
     useEffect(() => {
         if (isLoading) {
-            const response = axios.get('https://node.aryzap.com/api/episodes')
+            const response = axios.get('https://node.aryzap.com/api/cdn')
                 .then(res => {
                     console.log(res.data);
-                    setSeries(res.data)
+                    setSeries(res.data.episode)
                 });
 
             setIsLoading(false);
@@ -60,7 +60,7 @@ const Episode = () => {
     const updateDelete = (id) => {
         // TODO: remove this entry from mongodb using axios.delete
 
-        const response = axios.delete('https://node.aryzap.com/api/episodes/' + id).catch(err => {
+        const response = axios.delete('https://node.aryzap.com/api/cdn/' + id).catch(err => {
             console.log(err.message);
             toast.promise(response, {
                 loading: 'Loading...',
@@ -144,7 +144,7 @@ const Episode = () => {
                         <div
                             className={`rounded-md h-40 relative overflow-hidden block z-10 before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-transparent before:opacity-90 before:z-[-5]  bg-cover `}
                             style={{
-                                backgroundImage: `url(${app.imageCover.includes('http') ? app.imageCover : 'https://node.aryzap.com/public/' + app.imageCover})`
+                                backgroundImage: `url(${app.imagePath.includes('http') ? app.imagePath : 'https://node.aryzap.com/public/' + app.imagePath})`
                             }}>
                             <div className="absolute inset-0 z-10 text-center flex flex-row  opacity-0 hover:opacity-100  duration-300">
                                 <a href={`episode/edit/${app._id}`} class="bg-opacity-70 hover:bg-opacity-60 w-1/2 hover:bg-green-600 bg-green-950 h-40 ">
@@ -153,8 +153,8 @@ const Episode = () => {
                                     <p className='text-white font-bold'>Edit</p>
                                 </a>
                                 <a onClick={() => confirmAlert({
-                                    title: 'Are you sure  you want to delete this',
-                                    message: 'Are you sure to do this.',
+                                    title: 'Are you sure  you want to delete this ?',
+                                    message: app.title,
                                     buttons: [
                                         {
                                             label: 'Yes',

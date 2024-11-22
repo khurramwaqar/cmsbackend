@@ -14,6 +14,7 @@ import Ages from './pages/ages/Ages';
 import Series from './pages/series/Series';
 import Episode from './pages/episodes/Episode';
 import Settings from './pages/settings/Settings';
+import Feedbacks from './pages/feedbacks/Feedbacks';
 import Sidebar from './components/Sidebar';
 import Login from './pages/auth/Login';
 import Logout from './pages/auth/Logout';
@@ -53,6 +54,7 @@ import PromotionalBanner from './pages/promotional/PromotionalHome';
 import PromotionalCreate from './pages/promotional/PromotionalCreate';
 import DMEpisode from './pages/dmepisode/Episode';
 import CategoriesEdit from './pages/categories/Edit';
+import EpisodeEdit from './pages/episodes/Edit';
 
 const lsCache = localStorage;
 
@@ -253,12 +255,20 @@ const routerDef = [{
   element: <EpisodeCreate />
 },
 {
+  path: "/episode/edit/:id",
+  element: <EpisodeEdit />
+},
+{
   path: "/ytepisodes",
   element: <YTEpisode />
 },
 {
   path: "/dmepisodes",
   element: <DMEpisode />
+},
+{
+  path: "/feedbacks",
+  element: <Feedbacks />
 },
 {
   path: "/settings",

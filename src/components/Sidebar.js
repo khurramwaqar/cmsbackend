@@ -145,6 +145,13 @@ const Sidebar = () => {
                               <span class="ml-3 font-medium">DM Episodes </span>
                             </a>
                           </li>
+                          <li className='bg-gray-900 rounded-md dark:hover:bg-red-700 group'>
+                            <a href="/feedbacks" class="flex items-center p-2 text-base font-normal hover:text-white rounded-lg text-white hover:bg-red-700 group ">
+                              <QueueListIcon width={20} />
+
+                              <span class="ml-3 font-medium">Apps & Web Feedbacks </span>
+                            </a>
+                          </li>
                         </> : "Not Found !")}
 
               {/* <li className='bg-gray-800 rounded-sm dark:hover:bg-red-700 group'>

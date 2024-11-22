@@ -8,7 +8,8 @@ import Select from 'react-select';
 import { Toaster, toast } from 'react-hot-toast';
 import { Multiselect } from 'react-widgets';
 import Toggle from 'react-toggle';
-const EpisodeCreate = () => {
+import { useParams } from 'react-router-dom';
+const EpisodeEdit = (props) => {
 
 
     const [image1, setImage1] = useState(null);
@@ -35,8 +36,26 @@ const EpisodeCreate = () => {
     const [genreDesc, setGenreDesc] = useState(false);
     const [appId, setAppId] = useState(false);
     const [casts, setCasts] = useState(null);
+    const [editData, setEditData] = useState(null);
+    const [singleGeop, setSingleGeop] = useState(null);
 
     const [isPublished, setIsPublished] = useState(null);
+
+    const [inputValues, setInputValues] = useState({
+        seriesId: '',
+        videoEpNumber: '',
+        videoSource: '',
+        title: '',
+        description: '',
+        imagePath: '',
+        imagePathV2: '',
+        videoViews: '',
+        videoLength: '',
+        videoType: '',
+        published: Boolean
+    });
+
+    const params = useParams(props);
 
     const handleImg1 = (e) => {
         e.preventDefault();
@@ -56,7 +75,7 @@ const EpisodeCreate = () => {
                 setIsLoading(false);
             }).then((resp) => {
                 console.log(resp.data);
-                setImage1(resp.data.imagePath);
+                setImage1('cdnv1/' + resp.data.imagePath);
                 console.log(image1);
                 setIsLoading(false);
             });
@@ -97,7 +116,7 @@ const EpisodeCreate = () => {
                 setIsLoading(false);
             }).then((resp) => {
                 console.log(resp.data);
-                setImage2(resp.data.imagePath);
+                setImage2('cdnv2/' + resp.data.imagePath);
                 console.log(image2);
                 setIsLoading(false);
             });
@@ -129,20 +148,23 @@ const EpisodeCreate = () => {
         console.log(finalApps);
         console.log(finalGenres);
         console.log(finalCategories);
+        alert(params.id);
 
         try {
-            const respC = axios.post('https://node.aryzap.com/api/cdn', {
-                title: data.epVideoName,
-                description: data.epVideoDescription,
-                seriesId: finalCategories,
-                videoEpNumber: data.epVideoNumber,
-                videoSource: data.epVideoSource,
-                imagePath: `cdnv1/${image1}`,
-                imagePathV2: `cdnv2/${image2}`,
+
+
+            const respC = axios.put('https://node.aryzap.com/api/cdn/' + params.id, {
+                title: inputValues.title,
+                description: inputValues.description,
+                seriesId: inputValues.seriesId,
+                videoEpNumber: inputValues.videoEpNumber,
+                videoSource: inputValues.videoSource,
+                imagePath: `${image1}`,
+                imagePathV2: `${image2}`,
                 published: isPublished,
-                videoViews: data.epVideoViews,
-                videoLength: data.epVideoLength,
-                videoType: data.epVideoTypes
+                videoViews: inputValues.videoViews,
+                videoLength: inputValues.videoLength,
+                videoType: inputValues.videoType
             }).catch((error) => {
 
                 return console.log(error);
@@ -168,33 +190,12 @@ const EpisodeCreate = () => {
 
 
     };
-    const sfApps = [];
-    const sfCatfegories = [];
-    const sfGenres = [];
 
-    const handleChangeApps = (str) => {
-        setSelectedApps(str);
-        // create a for loop to get only values in above results which belongs to str variable and set to setFinalApps
-        for (let i = 0; i < str.length; i++) {
-            sfApps.push(str[i].value);
-        }
-        setFinalApps(sfApps);
-    }
-    const handleChangeGenres = (str) => {
-        setSelectedGenres(str);
-        // create a for loop to get only values in above results which belongs to str variable and set to setFinalApps
-        for (let i = 0; i < str.length; i++) {
-            sfGenres.push(str[i].value);
-        }
-        setFinalGenres(sfGenres);
-    }
+
     const handleChangeCategories = (selectedOption) => {
         setSelectedCategories(selectedOption); // Update selected option
         setFinalCategories(selectedOption.value); // Extract and set the value
     }
-
-    const appsHolder = [];
-    const genresHolder = [];
     const categoriesHolder = [];
 
 
@@ -215,6 +216,37 @@ const EpisodeCreate = () => {
             });
 
             setAppsLoad(false);
+
+            const fetchEpisodeData = async () => {
+                try {
+                    const response = await axios.get(`https://node.aryzap.com/api/cdn/ep/${params.id}`);
+                    const res = response.data.episode;
+                    setEditData(res);
+                    //alert(JSON.stringify(params.id));
+                    setInputValues({
+                        ...inputValues,
+                        seriesId: res.seriesId,
+                        videoEpNumber: res.videoEpNumber,
+                        videoSource: res.videoSource,
+                        title: res.title,
+                        description: res.description,
+                        imagePath: res.imagePath,
+                        imagePathV2: res.imagePathV2,
+                        videoViews: res.videoViews,
+                        videoLength: res.videoLength,
+                        videoType: res.videoType,
+                        published: res.published
+                    });
+
+                    setImage1(res.imagePath);
+                    setImage2(res.imagePathV2);
+
+                } catch (error) {
+                    console.error("Error fetching episode data:", error);
+                }
+            };
+
+            fetchEpisodeData();
         }
     });
 
@@ -278,9 +310,10 @@ const EpisodeCreate = () => {
                                 <input
                                     type="text"
                                     id="s_name"
-                                    {...register("epVideoName")}
+                                    defaultValue={inputValues?.title}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Video Name"
+                                    onChange={(e) => setInputValues({ ...inputValues, title: e.target.value })}
                                 />
                             </div>
                             <div>
@@ -288,9 +321,10 @@ const EpisodeCreate = () => {
                                 <input
                                     type="text"
                                     id="s_cdn_link"
-                                    {...register("epVideoSource")}
+                                    defaultValue={inputValues?.videoSource}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder=".m3u/.mp4/.mpd"
+                                    onChange={(e) => setInputValues({ ...inputValues, videoSource: e.target.value })}
                                     required />
                             </div>
 
@@ -304,7 +338,8 @@ const EpisodeCreate = () => {
                                 <input
                                     type="text"
                                     id="s_airday"
-                                    {...register("epVideoNumber")}
+                                    defaultValue={inputValues?.videoEpNumber}
+                                    onChange={(e) => setInputValues({ ...inputValues, videoEpNumber: e.target.value })}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="01"
                                 />
@@ -314,7 +349,8 @@ const EpisodeCreate = () => {
                                 <input
                                     type="text"
                                     id="s_time"
-                                    {...register("epVideoViews")}
+                                    defaultValue={inputValues?.videoViews}
+                                    onChange={(e) => setInputValues({ ...inputValues, videoViews: e.target.value })}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="1024"
                                 />
@@ -324,29 +360,61 @@ const EpisodeCreate = () => {
                                 <input
                                     type="text"
                                     id="s_time"
-                                    {...register("epVideoLength")}
+                                    defaultValue={inputValues?.videoLength}
+                                    onChange={(e) => setInputValues({ ...inputValues, videoLength: e.target.value })}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="52 Minutes"
                                 />
                             </div>
                             <div class="mb-6">
                                 <label for="s_ages" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Video Types</label>
-                                <select {...register("epVideoTypes")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    {videoTypes != null && videoTypes.map((type, index) => {
-                                        return <option value={type.title}> {type.title} </option>
-                                    })}
+                                <select
+                                    onChange={(e) =>
+                                        setInputValues({ ...inputValues, videoType: e.target.value })
+                                    }
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    value={inputValues?.videoType}
+                                >
+                                    <option value="" disabled>
+                                        Select Video Type
+                                    </option>
+                                    {videoTypes?.map((type, index) => (
+                                        <option key={index} value={type.title}>
+                                            {type.title}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
                             <div class="mb-6">
                                 <label for="s_categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series ID</label>
-                                <Select
+                                {/* <Select
 
                                     className='text-black'
                                     value={selectedCategories}
                                     onChange={handleChangeCategories}
                                     options={categories}
-                                />
+                                /> */}
+                                <select
+                                    onChange={(e) => setInputValues({ ...inputValues, seriesId: e.target.value })}
+                                    name="geoPolicy"
+                                    id="geoPolicy"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                >
+                                    {/* Display a loading option if seriesId is not set */}
+                                    {!inputValues?.seriesId && <option disabled>Loading...</option>}
+
+                                    {/* Map over categories and render options */}
+                                    {categories?.map((geop, index) => (
+                                        <option
+                                            key={index}
+                                            value={geop.value}
+                                            selected={geop.value === inputValues.seriesId}
+                                        >
+                                            {geop.label}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
 
 
@@ -359,7 +427,7 @@ const EpisodeCreate = () => {
                             <div class="mb-6">
                                 <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">If you want to publish this video on devices please toggle the below button</label>
                                 <Toggle
-                                    defaultChecked={isPublished}
+                                    defaultChecked={inputValues?.published}
                                     onChange={() => { if (isPublished == true) { setIsPublished(false); } else { setIsPublished(true); } }} />
                             </div>
                             <div class="mb-6">
@@ -372,7 +440,9 @@ const EpisodeCreate = () => {
                                     accept="image/*"
                                     type="file" />
                                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 1080x720px).</p>
-
+                                <div className="justify-center self-center" >
+                                    {inputValues?.imagePath ? <img className="rounded-lg w-32 relative shadow-lg mx-auto" src={'https://node.aryzap.com/public/' + inputValues?.imagePath} /> : ""}
+                                </div>
                             </div>
                             <div class="mb-6">
                                 <label for="s_mobileImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ImagePathv2: </label>
@@ -384,7 +454,9 @@ const EpisodeCreate = () => {
                                     accept="image/*"
                                     type="file" />
                                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 280x400px).</p>
-
+                                <div className="justify-center self-center" >
+                                    {inputValues?.imagePathV2 ? <img className="rounded-lg w-32 relative shadow-lg mx-auto" src={'https://node.aryzap.com/public/' + inputValues?.imagePathV2} /> : ""}
+                                </div>
                             </div>
 
 
@@ -394,10 +466,11 @@ const EpisodeCreate = () => {
                         <div className='mb-10'>
                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Episode Description</label>
                             <textarea
-                                onChange={(e) => setGenreDesc(e.target.value)}
+                                onChange={(e) => setInputValues({ ...inputValues, description: e.target.value })}
                                 id="description"
-                                {...register("epVideoDescription")}
+                                defaultValue={inputValues?.description}
                                 rows="8"
+
                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="App description here">
 
@@ -423,4 +496,4 @@ const EpisodeCreate = () => {
     )
 }
 
-export default EpisodeCreate;
+export default EpisodeEdit;
