@@ -115,7 +115,9 @@ const Series = () => {
       <div className="text-2xl font-bold pb-2 mb-5  border-b border-b-gray-500 ">
         Series
       </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
+        
         <a href="/series/create">
           <div className={"rounded-md h-36 hover:bg-gray-950 bg-blue-950 animate-pulse"}>
 
@@ -141,7 +143,7 @@ const Series = () => {
         {series ? series.map((app, index) => {
           return (
             <div
-              className={`rounded-md h-36 relative overflow-hidden block z-10 before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-transparent before:opacity-90 before:z-[-5]  bg-cover `}
+              className={`rounded-md h-36 relative overflow-hidden block z-auto before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-transparent before:opacity-90 before:z-[-5]  bg-cover `}
               style={{
                 backgroundImage: `url(${app.imageCoverDesktop.includes('http') ? app.imageCoverDesktop : 'https://node.aryzap.com/public/' + app.imageCoverDesktop})`
               }}>
@@ -161,13 +163,28 @@ const Series = () => {
                   </div>
                 </div>
               </div>
-              <div className='container h-10 bg-black bg-opacity-50 flex justify-around py-2'>
-                <div>
-                  Edit
-                </div>
-                <div>
-                  Delete
-                </div>
+              <div className='container h-10 bg-black bg-opacity-50 flex justify-around'>
+                <a href={`series/edit/${app._id}`} className='hover:bg-green-500 w-full py-2 text-center'><div>
+                  <span className='text-white'>Edit</span>
+                </div></a>
+                <a onClick={() => confirmAlert({
+                  title: 'Are you sure  you want to delete this',
+                  message: 'Are you sure to do this.',
+                  buttons: [
+                    {
+                      label: 'Yes',
+                      onClick: () => updateDelete(app._id)
+                    },
+                    {
+                      label: 'No',
+                      onClick: () => {
+
+                      }
+                    }
+                  ]
+                })} className='hover:bg-red-500 w-full py-2 text-center'><div  >
+                <span className='text-white'>Delete</span>
+                </div></a>
               </div>
               {/* <div className=" z-10 text-center flex flex-row   opacity-0 hover:opacity-100  duration-300">
                 <a href={`series/edit/${app._id}`} class="bg-opacity-70 hover:bg-opacity-60 w-1/2 hover:bg-green-600 bg-green-950 h-40 ">
