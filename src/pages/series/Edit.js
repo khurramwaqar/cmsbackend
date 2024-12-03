@@ -20,6 +20,7 @@ const SeriesEdit = (props) => {
     const sfGenresX = [];
 
     const params = useParams(props);
+    const seriesTypesMeta = ['show', 'live-event', 'live', 'programs', 'singleVideo', 'webview'];
 
     const [image1, setImage1] = useState(null);
     const [image2, setImage2] = useState(null);
@@ -693,14 +694,18 @@ const SeriesEdit = (props) => {
                             </div>
                             <div>
                                 <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
-                                <input
-                                    type="text"
-                                    id="s_ost"
-                                    defaultValue={inputValues?.seriesType}
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Series Type: show|live|singleVideo|webview"
-                                    onChange={(e) => setInputValues({ ...inputValues, seriesType: e.target.value })}
-                                />
+
+
+                                <select onChange={(e) => setInputValues({ ...inputValues, seriesType: e.target.value })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option defaultValue={inputValues?.seriesType}>{inputValues?.seriesType || 'Select a type'}</option>
+                                    {seriesTypesMeta
+                                        .filter(type => type !== inputValues?.seriesType) // Exclude the current seriesType
+                                        .map(type => (
+                                            <option key={type} value={type}>
+                                                {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')} {/* Capitalize and format */}
+                                            </option>
+                                        ))}
+                                </select>
                             </div>
                             {isVideoIs != null && (
                                 <div>

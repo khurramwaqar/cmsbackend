@@ -27,6 +27,7 @@
     "react-hook-form": "^7.45.4",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
+    "react-json-view": "^1.21.3",
     "react-jwt": "^1.2.0",
     "react-loader-spinner": "^5.4.5",
     "react-radio-buttons": "^1.2.2",

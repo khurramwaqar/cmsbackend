@@ -55,6 +55,7 @@ import PromotionalCreate from './pages/promotional/PromotionalCreate';
 import DMEpisode from './pages/dmepisode/Episode';
 import CategoriesEdit from './pages/categories/Edit';
 import EpisodeEdit from './pages/episodes/Edit';
+import AppsEdit from './pages/apps/AppsEdit';
 
 const lsCache = localStorage;
 
@@ -181,6 +182,10 @@ const routerDef = [{
 {
   path: "/apps",
   element: <Apps />
+},
+{
+  path: "/apps/edit/:id",
+  element: <AppsEdit />
 },
 {
   path: "/apps/create",

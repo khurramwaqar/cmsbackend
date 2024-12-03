@@ -117,7 +117,7 @@ const Series = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
         <a href="/series/create">
-          <div className={"rounded-md h-72 hover:bg-gray-950 bg-blue-950 animate-pulse"}>
+          <div className={"rounded-md h-36 hover:bg-gray-950 bg-blue-950 animate-pulse"}>
 
             <div className="p-6 ">
               <div className="flex items-center">
@@ -141,11 +141,35 @@ const Series = () => {
         {series ? series.map((app, index) => {
           return (
             <div
-              className={`rounded-md h-72 relative overflow-hidden block z-10 before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-transparent before:opacity-90 before:z-[-5]  bg-cover `}
+              className={`rounded-md h-36 relative overflow-hidden block z-10 before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-transparent before:opacity-90 before:z-[-5]  bg-cover `}
               style={{
-                backgroundImage: `url(${app.imagePoster.includes('http') ? app.imagePoster : 'https://node.aryzap.com/public/' + app.imagePoster})`
+                backgroundImage: `url(${app.imageCoverDesktop.includes('http') ? app.imageCoverDesktop : 'https://node.aryzap.com/public/' + app.imageCoverDesktop})`
               }}>
-              <div className=" z-10 text-center flex flex-row  opacity-0 hover:opacity-100  duration-300">
+              <div className="p-4">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+
+                    <div className='h-12'>
+                      {app.logo == "" ? "" : <img src={'https://node.aryzap.com/public/' + app.logo} width="60px" />}
+
+                    </div>
+
+
+                    <h2 className="text-sm font-bold mt-2">
+                      {app.title}
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              <div className='container h-10 bg-black bg-opacity-50 flex justify-around py-2'>
+                <div>
+                  Edit
+                </div>
+                <div>
+                  Delete
+                </div>
+              </div>
+              {/* <div className=" z-10 text-center flex flex-row   opacity-0 hover:opacity-100  duration-300">
                 <a href={`series/edit/${app._id}`} class="bg-opacity-70 hover:bg-opacity-60 w-1/2 hover:bg-green-600 bg-green-950 h-40 ">
                   <div className='h-12'></div>
                   <center><PencilSquareIcon width={30} /></center>
@@ -171,26 +195,8 @@ const Series = () => {
                   <center><TrashIcon width={30} /></center>
                   <p className='text-white font-bold'>Delete</p>
                 </a>
-              </div>
-              <div className="p-4">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
+              </div> */}
 
-                    <div className='h-12'>
-                      {app.logo == "" ? "" : <img src={'https://node.aryzap.com/public/' + app.logo} width="60px" />}
-
-                    </div>
-
-
-                    <h2 className="text-sm font-bold mt-2">
-                      {app.title}
-                    </h2>
-                    <p className='line-clamp-3 w-1/5 text-xs font-light'>
-                      {app.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           )
         }) :

@@ -1,13 +1,26 @@
-POST https://zapi.aryzap.com/api/payment/reg HTTP/1.1
+POST http://127.0.0.1:8080/api/apps HTTP/1.1
 content-type: application/json
 
 {
-     "currency": "PKR",
-     "orderId": "9200000000000001",
-     "packageAmount": "50",
-     "customerName": "John Smith",
-     "packageName": "Basic 50"
+     "title": "appTitle",
+     "description": "appDesc",
+     "image": "resp.data.imagePath",
+     "bundleId": "appBundle",
+     "platform": "appPlatform",
+     "appsConfig": "appConfig"
 }
+
+
+# POST https://zapi.aryzap.com/api/payment/reg HTTP/1.1
+# content-type: application/json
+
+# {
+#      "currency": "PKR",
+#      "orderId": "9200000000000001",
+#      "packageAmount": "50",
+#      "customerName": "John Smith",
+#      "packageName": "Basic 50"
+# }
 
 # {
 #     "title": "data.seriesName",

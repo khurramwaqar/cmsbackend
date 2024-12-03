@@ -20,10 +20,10 @@ const loginVerification = async () => {
 
 createRoot(document.getElementById('root')).render(
   <>
-    <div class="w-full bg-gray-900 lg:flex flex-row ">
+    <div class="w-full bg-gray-800 h-screen lg:flex flex-row ">
       <Sidebar />
 
-      <div className="mx-auto lg:w-full md:w-full  bg-gray-600 p-10 text-white h-{100%}">
+      <div className="mx-auto lg:w-full md:w-full  bg-gray-700 p-10 text-white h-{100%}">
         <App />
         {/* 
         <form>

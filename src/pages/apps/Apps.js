@@ -56,25 +56,27 @@ const Apps = () => {
                 </a>
                 {allApps ? allApps.map((app, index) => {
                     return (
-                        <div key={index} className="rounded-md bg-gray-950 shadow-md">
+                        <a href={`/apps/edit/${app._id}`}>
+                            <div key={index} className="rounded-md bg-gray-950 shadow-md">
 
-                            <div className="p-6 ">
-                                <div className="flex items-center">
-                                    <div className="flex-shrink-0">
+                                <div className="p-6 ">
+                                    <div className="flex items-center">
+                                        <div className="flex-shrink-0">
 
-                                        <img src={"https://node.aryzap.com/public/" + app.image} className="w-5 h-5" />
+                                            <img src={"https://node.aryzap.com/public/" + app.image} className="w-5 h-5" />
 
-                                        <h2 className="text-sm font-bold mt-2">
-                                            {app.title}
-                                        </h2>
-                                        <p className='text-xs font-light'>
-                                            <span>Bundle: {app.bundleId}</span><br />
-                                            <span>Platform: {app.platform}</span>
-                                        </p>
+                                            <h2 className="text-sm font-bold mt-2">
+                                                {app.title}
+                                            </h2>
+                                            <p className='text-xs font-light'>
+                                                <span>Bundle: {app.bundleId}</span><br />
+                                                <span>Platform: {app.platform}</span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     )
                 }) :
 

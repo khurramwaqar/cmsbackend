@@ -4,7 +4,7 @@ import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
 import { CursorArrowRippleIcon } from '@heroicons/react/24/outline'
 import toast, { Toaster } from 'react-hot-toast';
-
+import ReactJson from 'react-json-view'
 const AppsCreate = () => {
 
     const [colors, setColors] = useState(null);
@@ -16,8 +16,29 @@ const AppsCreate = () => {
     const [appBundle, setAppBundle] = useState(false);
     const [appPlatform, setAppPlatform] = useState(false);
 
+    const [appConfigs, setAppConfigs] = useState({
+        "appName": appTitle,
+        "appDesc": appDesc,
+        "appBundle": appBundle,
+        "appPlatform": appPlatform,
+        "authToken": "your-web-secret-token",
+        "appHomeAds": false,
+        "appApiMainEndpoint": "https://cdn.aryzap.com/api/fetcher.php?budleId=" + appBundle,
+        "appApiHomeEndpoint": "https://node.aryzap.com",
 
+    });
 
+    const appConfig = {
+        "appName": appTitle,
+        "appDesc": appDesc,
+        "appBundle": appBundle,
+        "appPlatform": appPlatform,
+        "authToken": "your-web-secret-token",
+        "appHomeAds": false,
+        "appApiMainEndpoint": "https://cdn.aryzap.com/api/fetcher.php?budleId=" + appBundle,
+        "appApiHomeEndpoint": "https://node.aryzap.com",
+
+    }
 
     const handleImageChange = (e) => {
         e.preventDefault();
@@ -63,12 +84,13 @@ const AppsCreate = () => {
 
                 if (resp.data.imagePath != null) {
                     if (appTitle != null || appPlatform != null || appBundle != null) {
-                        const respp = axios.post('https://node.aryzap.com/api/apps', {
+                        const respp = axios.post('http://127.0.0.1:8080/api/apps', {
                             title: appTitle,
                             description: appDesc,
                             image: resp.data.imagePath,
                             bundleId: appBundle,
                             platform: appPlatform,
+                            appsConfig: appConfig
                         }).catch((error) => {
                             console.log(error);
                             return true;
@@ -218,6 +240,11 @@ const AppsCreate = () => {
                                     placeholder="App description here">
 
                                 </textarea>
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label for="AppsConfig" class="block mb-2 text-sm font-medium text-white">Apps Config</label>
+                                <br />
+                                <ReactJson src={appConfig} theme="monokai" onAdd={(r) => console.log("onAdd Event runnung")} onEdit={(r) => { console.log("onEdit Event runnung") }} onDelete={(r) => console.log("onDelete Event runnung")} />
                             </div>
                         </div>
                         <button type="submit" onClick={() => { }} class="inline-flex items-center px-5 py-2.5 mt-4 bg-gray-950 hover:bg-gray-800 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">

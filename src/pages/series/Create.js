@@ -553,13 +553,22 @@ const SeriesCreate = () => {
                             </div>
                             <div>
                                 <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
-                                <input
+                                {/* <input
                                     type="text"
                                     id="s_ost"
                                     {...register("seriesType")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Series Type: show|live|singleVideo|webview"
-                                    required />
+                                    required /> */}
+                                <select {...register("seriesType")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value={'show'}> Show </option>
+                                    <option value={'live-event'}> Live Event </option>
+                                    <option value={'live'}> Live </option>
+                                    <option value={'programs'}> Programs </option>
+                                    <option value={'singleVideo'}> Single Video </option>
+                                    <option value={'webview'}> WebView </option>
+
+                                </select>
 
                             </div>
                             <div>
