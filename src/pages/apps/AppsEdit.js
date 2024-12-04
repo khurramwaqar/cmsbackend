@@ -22,7 +22,7 @@ const AppsEdit = (props) => {
     useEffect(() => {
         const fetchAppData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8080/api/apps/${id}`);
+                const response = await axios.get(`https://node.aryzap.com/api/apps/${id}`);
                 const data = response.data;
                 setAppTitle(data.title);
                 setAppDesc(data.description);
