@@ -12,6 +12,9 @@ import { Multiselect } from 'react-widgets';
 import Toggle from 'react-toggle'
 import { ArrowRightCircleIcon, ChevronDoubleUpIcon, ChevronUpIcon, CircleStackIcon, CloudArrowUpIcon, CodeBracketIcon, CursorArrowRippleIcon, DocumentIcon, InboxStackIcon, PencilSquareIcon, PlayCircleIcon, PlayIcon, ShieldCheckIcon, Square2StackIcon, TvIcon } from '@heroicons/react/24/outline';
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const SeriesCreate = () => {
 
@@ -44,7 +47,9 @@ const SeriesCreate = () => {
     const [appId, setAppId] = useState(false);
     const [casts, setCasts] = useState(null);
     const [isVideoIs, setIsVideoIs] = useState(false);
-
+    const [isLive, setIsLive] = useState(false);
+    const [seriesEvent, setSeriesEvent] = useState(null);
+    const [startDate, setStartDate] = useState(new Date());
 
     const handleImg1 = (e) => {
         e.preventDefault();
@@ -238,10 +243,15 @@ const SeriesCreate = () => {
                 status: "published",
                 geoPolicy: singleGeop,
                 adsManager: data.seriesAds,
-                seriesType: data.seriesType,
+                seriesType: seriesEvent,
                 isDM: isVideoIs,
                 seiresCDNWebLink: data.seiresCDNWebLink,
-                seiresCDNWebKey: data.seiresCDNWebKey
+                seiresCDNWebKey: data.seiresCDNWebKey,
+                seriesLayout: data.seriesLayout,
+                isLive: isLive,
+                optionalFieldOne: data.optFieldOne,
+                optionalFieldTwo: data.optFieldTwo,
+                releaseDate: data.releaseDate,
             }).catch((error) => {
 
                 return console.log(error);
@@ -376,7 +386,9 @@ const SeriesCreate = () => {
         }
     });
 
-
+    const eventChangeFunc = (e) => {
+        setSeriesEvent(e);
+    }
 
     const handleImageUploading = async (e) => {
         e.preventDefault();
@@ -500,36 +512,95 @@ const SeriesCreate = () => {
                                 />
                             </div>
                             <div>
-                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Link</label>
-                                <input
+                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
+                                {/* <input
                                     type="text"
-                                    id="s_cdn_link"
-                                    {...register("seriesCDNLink")}
+                                    id="s_ost"
+                                    {...register("seriesType")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder=".m3u/.mp4/.mpd"
-                                />
-                            </div>
-                            <div>
-                                <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series YT</label>
-                                <input
-                                    type="text"
-                                    id="s_yt"
-                                    {...register("seriesYT")}
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="YT playlist"
-                                />
-                            </div>
-                            <div>
-                                <label for="s_dm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series DM</label>
-                                <input
-                                    type="text"
-                                    id="s_dm"
-                                    {...register("seriesDM")}
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="DM playlist"
-                                />
+                                    placeholder="Series Type: show|live|singleVideo|webview"
+                                    required /> */}
+                                <select onChange={(e) => eventChangeFunc(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value={'show'}> Show </option>
+                                    <option value={'live-event'}> Live Event </option>
+                                    <option value={'live'}> Live </option>
+                                    <option value={'programs'}> Programs </option>
+                                    <option value={'singleVideo'}> Single Video </option>
+                                    <option value={'webview'}> WebView </option>
+
+                                </select>
+
                             </div>
                         </div>
+
+                        {seriesEvent == "live-event" || seriesEvent == "live" || seriesEvent == "singleVideo" ?
+                            <>
+                                <div className='grid gap-6 mb-6 md:grid-cols-3 border-x-2 border-y-2 border-gray-500 rounded-md py-2 px-2'>
+
+                                    <div>
+                                        <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN  WEB Link</label>
+                                        <input
+                                            type="text"
+                                            id="s_cdn_linkWeb"
+                                            {...register("seiresCDNWebLink")}
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder=".m3u/.mp4/.mpd"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Key</label>
+                                        <input
+                                            type="text"
+                                            id="s_cdn_linkWebKey"
+                                            {...register("seiresCDNWebKey")}
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="nzvspakweb2024"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Is Live</label>
+                                        <Toggle
+                                            defaultChecked={isLive}
+                                            onChange={() => { if (isLive == true) { setIsLive(false); } else { setIsLive(true); } }} />
+
+
+                                    </div>
+                                </div>
+
+                            </> : <div className='grid gap-6 mb-6 md:grid-cols-3 border-x-2 border-y-2 border-gray-400 rounded-md py-2 px-2'>
+                                <div>
+                                    <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series YT</label>
+                                    <input
+                                        type="text"
+                                        id="s_yt"
+                                        {...register("seriesYT")}
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="YT playlist"
+                                    />
+                                </div>
+                                <div>
+                                    <label for="s_dm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series DM</label>
+                                    <input
+                                        type="text"
+                                        id="s_dm"
+                                        {...register("seriesDM")}
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="DM playlist"
+                                    />
+                                </div>
+                                <div>
+                                    <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
+                                    <Toggle
+                                        defaultChecked={isVideoIs}
+                                        onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
+
+                                </div>
+                            </div>
+
+                        }
+
+
+
                         <div class="grid gap-6 mb-6 md:grid-cols-3">
                             <div>
                                 <label for="s_trailer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Trailer</label>
@@ -552,52 +623,51 @@ const SeriesCreate = () => {
                                 />
                             </div>
                             <div>
-                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
-                                {/* <input
+
+                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Link</label>
+                                <input
                                     type="text"
-                                    id="s_ost"
-                                    {...register("seriesType")}
+                                    id="s_cdn_link"
+                                    {...register("seriesCDNLink")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Series Type: show|live|singleVideo|webview"
-                                    required /> */}
-                                <select {...register("seriesType")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option value={'show'}> Show </option>
-                                    <option value={'live-event'}> Live Event </option>
-                                    <option value={'live'}> Live </option>
-                                    <option value={'programs'}> Programs </option>
-                                    <option value={'singleVideo'}> Single Video </option>
-                                    <option value={'webview'}> WebView </option>
+                                    placeholder="App CDN Link: .m3u/.mp4/.mpd"
+                                />
+
+                            </div>
+                            <div>
+                                <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Layout</label>
+
+                                <select {...register("seriesLayout")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value={'v1'}> V1 </option>
+                                    <option value={'v2'}> V2 </option>
+                                    <option value={'v3'}> V3 </option>
 
                                 </select>
-
                             </div>
-                            <div>
-                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
-                                <Toggle
-                                    defaultChecked={isVideoIs}
-                                    onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
 
-                            </div>
                             <div>
-                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN  WEB Link</label>
+                                <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Optional Field One</label>
                                 <input
                                     type="text"
-                                    id="s_cdn_linkWeb"
-                                    {...register("seiresCDNWebLink")}
+                                    id="s_yt"
+                                    {...register("optFieldOne")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder=".m3u/.mp4/.mpd"
+                                    placeholder="Extra Field One"
                                 />
                             </div>
+
                             <div>
-                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Key</label>
+                                <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Optional Field Two</label>
                                 <input
                                     type="text"
-                                    id="s_cdn_linkWebKey"
-                                    {...register("seiresCDNWebKey")}
+                                    id="s_yt"
+                                    {...register("optFieldTwo")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="nzvspakweb2024"
+                                    placeholder="Extra Field Two"
                                 />
                             </div>
+
+
 
                         </div>
                         <div class="mb-6">
@@ -730,7 +800,7 @@ const SeriesCreate = () => {
 
                         </div>
 
-                        <div class="grid gap-6 mb-6 md:grid-cols-1">
+                        <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div class="mb-6">
                                 <label for="s_portraitImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ads Manager</label>
                                 <select {...register("seriesAds")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -738,6 +808,10 @@ const SeriesCreate = () => {
                                         return <option value={ads._id}> {ads.title} </option>
                                     })}
                                 </select>
+                            </div>
+                            <div class="mb-6">
+                                <label for="s_portraitImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Released Date</label>
+                                <input {...register("releaseDate")} className=' py-1 px-1 bg-gray-700 w-full' type="date" id="releaseDate" name="releaseDate" />
                             </div>
                         </div>
 
@@ -792,6 +866,9 @@ const SeriesCreate = () => {
 
                             </div>
 
+
+
+
                         </div>
 
 
@@ -822,7 +899,7 @@ const SeriesCreate = () => {
                     </form>
 
                 </div>
-            </section>
+            </section >
         </>
     )
 }
