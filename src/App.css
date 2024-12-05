@@ -42,3 +42,7 @@ body {
   }
 }
 
+.bg-cover {
+  background-image: url('/public/images/digital-banner.webp') ;
+}
+
