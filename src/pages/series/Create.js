@@ -395,71 +395,6 @@ const SeriesCreate = () => {
     };
 
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     setIsLoading(true);
-
-    //     const formData = new FormData();
-    //     formData.append('file', file);
-
-    //     try {
-    //         const response = await axios.post('https://node.aryzap.com/api/media/upload', formData, {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data', // Ensure proper content type for file upload
-    //             },
-    //         }).catch((err) => {
-    //             console.log(err);
-    //             setIsLoading(false);
-    //         }).then((resp) => {
-    //             console.log(resp.data);
-    //             setImgPath(resp.data.imagePath);
-    //             setIsLoading(false);
-
-    //             if (resp.data.imagePath != null) {
-    //                 if (genreTitle != null) {
-    //                     axios.post('https://node.aryzap.com/api/categories', {
-    //                         title: genreTitle,
-    //                         description: genreDesc,
-    //                         image: resp.data.imagePath,
-    //                         appId: appId
-    //                     }).catch((error) => {
-    //                         console.log(error);
-    //                         return alert(JSON.stringify(error));
-
-    //                     }).then((response) => {
-    //                         console.log(response);
-
-    //                         if (response.status === 200) {
-    //                             alert("Your Category has been successfully added");
-    //                         }
-    //                         // return window.location.reload();
-    //                     });
-
-    //                 } else {
-    //                     return alert("Please check your fields");
-    //                 }
-    //             }
-
-
-
-
-    //         });
-    //         console.log(response.data);
-    //         if (response.status === 200) {
-    //             console.log('File uploaded successfully');
-    //         } else {
-    //             console.error('File upload failed');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error uploading file:', error);
-    //         setIsLoading(false);
-    //     }
-
-
-
-    // }
-
 
 
     return (
@@ -764,39 +699,6 @@ const SeriesCreate = () => {
                                 </div>
 
                             )}
-                            {/* <div>
-                                <input class="hidden" id="radio_1" type="radio" name="radio" />
-                                <label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer" for="radio_1">
-                                    <span class="text-xs font-semibold uppercase">Small</span>
-                                    <span class="text-xl font-bold mt-2">$10/mo</span>
-                                    <ul class="text-sm mt-2">
-                                        <li>Thing 1</li>
-                                        <li>Thing 2</li>
-                                    </ul>
-                                </label>
-                            </div>
-                            <div>
-                                <input class="hidden" id="radio_2" type="radio" name="radio" />
-                                <label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer" for="radio_2">
-                                    <span class="text-xs font-semibold uppercase">Medium</span>
-                                    <span class="text-xl font-bold mt-2">$40/mo</span>
-                                    <ul class="text-sm mt-2">
-                                        <li>Thing 1</li>
-                                        <li>Thing 2</li>
-                                    </ul>
-                                </label>
-                            </div>
-                            <div>
-                                <input class="hidden" id="radio_3" type="radio" name="radio" />
-                                <label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer" for="radio_3">
-                                    <span class="text-xs font-semibold uppercase">Big</span>
-                                    <span class="text-xl font-bold mt-2">$100/mo</span>
-                                    <ul class="text-sm mt-2">
-                                        <li>Thing 1</li>
-                                        <li>Thing 2</li>
-                                    </ul>
-                                </label>
-                            </div> */}
 
                         </div>
 

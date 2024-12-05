@@ -11,22 +11,6 @@ import gsap from 'gsap';
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 //import { findAll } from '../../users'
 
-import {
-    DndContext,
-    closestCenter,
-    KeyboardSensor,
-    PointerSensor,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core';
-import {
-    arrayMove,
-    SortableContext,
-    sortableKeyboardCoordinates,
-    verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-
-import { SortableItem } from './SortableItem';
 
 
 
@@ -86,18 +70,6 @@ const Home = () => {
                 Home
             </div>
 
-            <DndContext
-                sensors={sensors}
-                collisionDetection={closestCenter}
-                onDragEnd={handleDragEnd}
-            >
-                <SortableContext
-                    items={items}
-                    strategy={verticalListSortingStrategy}
-                >
-                    {items.map(id => <SortableItem key={id} id={id} />)}
-                </SortableContext>
-            </DndContext>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
                 {/* {stats != null ? stats.status.db : stats} */}
