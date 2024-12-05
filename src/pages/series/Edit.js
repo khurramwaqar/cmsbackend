@@ -97,7 +97,8 @@ const SeriesEdit = (props) => {
     const genresHolder = [];
     const categoriesHolder = [];
 
-
+    const [isLive, setIsLive] = useState(false);
+    const [seriesEvent, setSeriesEvent] = useState(null);
     const [inputValues, setInputValues] = useState({
         cast: Array(),
         title: '',
@@ -122,13 +123,18 @@ const SeriesEdit = (props) => {
         appId: Array(),
         adsManager: '',
         seriesType: '',
-        geoPolicy: Array()
+        geoPolicy: Array(),
+        optFieldOne: '',
+        optFieldTwo: '',
+        isLive: Boolean,
+        seriesLayout: '',
+        releaseDate: ''
+
     });
 
 
     useEffect(() => {
         if (isLoading) {
-
 
 
 
@@ -204,8 +210,14 @@ const SeriesEdit = (props) => {
                     ageRatingId: res.data.ageRatingId,
                     seriesType: res.data.seriesType,
                     geoPolicy: res.data.geoPolicy,
-                    adsManager: res.data.adsManager
+                    adsManager: res.data.adsManager,
+                    optFieldOne: res.data.optionalFieldOne,
+                    optFieldTwo: res.data.optionalFieldTwo,
+                    seriesLayout: res.data.seriesLayout,
+                    releaseDate: res.data.releaseDate,
+                    isLive: res.data.isLive,
                 });
+                eventChangeFunc(res.data.seriesType)
 
 
 
@@ -213,11 +225,17 @@ const SeriesEdit = (props) => {
                 setSingleGeop(res.data.geoPolicy._id);
                 setCasts(res.data.cast)
 
+
             })
             setIsLoading(false);
 
         }
     });
+
+    const eventChangeFunc = (e) => {
+        setSeriesEvent(e);
+    }
+
     const handleOnSubmitGenres = () => {
         // handleOnSubmitGenres(eGenres);
 
@@ -440,10 +458,16 @@ const SeriesEdit = (props) => {
                 status: "published",
                 geoPolicy: singleGeop,
                 adsManager: singleAd,
-                seriesType: inputValues.seriesType,
+                seriesType: seriesEvent,
                 isDM: isVideoIs,
                 seiresCDNWebLink: inputValues.seiresCDNWebLink,
-                seiresCDNWebKey: inputValues.seiresCDNWebKey
+                seiresCDNWebKey: inputValues.seiresCDNWebKey,
+                optionalFieldOne: inputValues.optFieldOne,
+                optionalFieldTwo: inputValues.optFieldTwo,
+                seriesLayout: inputValues.seriesLayout,
+                isLive: inputValues.isLive,
+                releaseDate: inputValues.releaseDate
+
             }).catch((error) => {
 
                 return console.log(error);
@@ -583,9 +607,7 @@ const SeriesEdit = (props) => {
 
 
     return (
-
         <>
-
             <Toaster
                 position="top-center"
                 reverseOrder={false}
@@ -611,24 +633,24 @@ const SeriesEdit = (props) => {
                     },
                 }}
             />
-            <div className="text-2xl font-bold pb-2 mb-5  border-b border-b-gray-500 ">
-                Series <span className='font-extrabold'>{'>'}</span> Add and Series
+            <div onClick={() => alert(seriesEvent)} className="text-2xl font-bold pb-2 mb-5  border-b border-b-gray-500 ">
+                Series <span className='font-extrabold'>{'>'}</span> Edit Series
             </div>
 
             <section class="bg-white dark:bg-gray-600">
                 <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new Series</h2>
+                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit Series</h2>
 
                     <form onSubmit={onSubmit}>
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
-                                <label for="series_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series name</label>
+                                <label for="series_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Name</label>
                                 <input
                                     type="text"
                                     id="s_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="The Shawshank Redemption"
-                                    defaultValue={inputValues.title}
+                                    value={inputValues.title}
                                     onChange={(e) => {
                                         console.log('Input value changed:', e.target.value);
                                         setInputValues({ ...inputValues, title: e.target.value })
@@ -636,48 +658,110 @@ const SeriesEdit = (props) => {
                                 />
                             </div>
                             <div>
-                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Link</label>
-                                <input
-                                    type="text"
-                                    id="s_cdn_link"
-                                    defaultValue={inputValues?.seiresCDN}
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder=".m3u/.mp4/.mpd"
-                                    onChange={(e) => setInputValues({ ...inputValues, seiresCDN: e.target.value })}
-                                />
-                            </div>
-                            <div>
-                                <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series YT</label>
-                                <input
-                                    type="text"
-                                    id="s_yt"
-                                    defaultValue={inputValues?.seriesYT}
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="YT playlist"
-                                    onChange={(e) => setInputValues({ ...inputValues, seriesYT: e.target.value })}
-                                />
-                            </div>
-                            <div>
-                                <label for="s_dm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series DM</label>
-                                <input
-                                    type="text"
-                                    id="s_dm"
-                                    value={inputValues?.seriesDM}
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="DM playlist"
-                                    onChange={(e) => setInputValues({ ...inputValues, seriesDM: e.target.value })}
-                                />
+
+                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
+
+
+
+
+                                <select onChange={(e) => eventChangeFunc(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value={inputValues?.seriesType}>{inputValues?.seriesType || 'Select a type'}</option>
+                                    {seriesTypesMeta
+                                        .filter(type => type !== inputValues?.seriesType) // Exclude the current seriesType
+                                        .map(type => (
+                                            <option key={type} value={type}>
+                                                {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')} {/* Capitalize and format */}
+                                            </option>
+                                        ))}
+
+                                </select>
+
+
+
                             </div>
                         </div>
+
+                        {seriesEvent == "live-event" || seriesEvent == "live" || seriesEvent == "singleVideo" ?
+                            <>
+                                <div className='grid gap-6 mb-6 md:grid-cols-3 border-x-2 border-y-2 border-gray-500 rounded-md py-2 px-2'>
+
+                                    <div>
+                                        <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Link</label>
+                                        <input
+                                            type="text"
+                                            id="s_cdn_link_web"
+                                            value={inputValues?.seiresCDNWebLink}
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder=".m3u/.mp4/.mpd"
+                                            onChange={(e) => setInputValues({ ...inputValues, seiresCDNWebLink: e.target.value })}
+                                        />
+                                    </div>
+                                    <div>
+
+                                        <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Key</label>
+                                        <input
+                                            type="text"
+                                            id="s_cdn_link_web_key"
+                                            value={inputValues?.seiresCDNWebKey}
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="nzvspak2024"
+                                            onChange={(e) => setInputValues({ ...inputValues, seiresCDNWebKey: e.target.value })}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Is Live</label>
+                                        <Toggle
+                                            defaultChecked={isLive}
+                                            onChange={() => { if (isLive == true) { setIsLive(false); } else { setIsLive(true); } }} />
+
+
+                                    </div>
+                                </div>
+
+                            </> : <div className='grid gap-6 mb-6 md:grid-cols-3 border-x-2 border-y-2 border-gray-400 rounded-md py-2 px-2'>
+                                <div>
+                                    <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series YT</label>
+                                    <input
+                                        type="text"
+                                        id="s_yt"
+                                        value={inputValues?.seriesYT}
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="YT playlist"
+                                        onChange={(e) => setInputValues({ ...inputValues, seriesYT: e.target.value })}
+                                    />
+                                </div>
+                                <div>
+                                    <label for="s_dm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series DM</label>
+                                    <input
+                                        type="text"
+                                        id="s_dm"
+                                        value={inputValues?.seriesDM}
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="DM playlist"
+                                        onChange={(e) => setInputValues({ ...inputValues, seriesDM: e.target.value })}
+                                    />
+                                </div>
+                                <div>
+                                    <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
+                                    <Toggle
+                                        defaultChecked={isVideoIs}
+                                        onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
+
+                                </div>
+                            </div>
+
+                        }
+
                         <div class="grid gap-6 mb-6 md:grid-cols-3">
                             <div>
                                 <label for="s_trailer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Trailer</label>
                                 <input
                                     type="text"
                                     id="s_trailer"
-                                    defaultValue={inputValues?.trailer}
+
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="trailer.m3u/yout.be/trailer/link"
+                                    value={inputValues?.trailer}
                                     onChange={(e) => setInputValues({ ...inputValues, trailer: e.target.value })}
                                 />
                             </div>
@@ -686,60 +770,64 @@ const SeriesEdit = (props) => {
                                 <input
                                     type="text"
                                     id="s_ost"
-                                    defaultValue={inputValues?.ost}
+                                    value={inputValues?.ost}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Series Theme Song, Drama's OST"
                                     onChange={(e) => setInputValues({ ...inputValues, ost: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
-
-
-                                <select onChange={(e) => setInputValues({ ...inputValues, seriesType: e.target.value })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option defaultValue={inputValues?.seriesType}>{inputValues?.seriesType || 'Select a type'}</option>
-                                    {seriesTypesMeta
-                                        .filter(type => type !== inputValues?.seriesType) // Exclude the current seriesType
-                                        .map(type => (
-                                            <option key={type} value={type}>
-                                                {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')} {/* Capitalize and format */}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                            {isVideoIs != null && (
-                                <div>
-                                    <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
-                                    <Toggle
-                                        defaultChecked={isVideoIs}
-                                        onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
-
-                                </div>
-                            )}
-
-                            <div>
-                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Link</label>
+                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Link</label>
                                 <input
                                     type="text"
-                                    id="s_cdn_link_web"
-                                    defaultValue={inputValues?.seiresCDNWebLink}
+                                    id="s_cdn_link"
+                                    value={inputValues?.seiresCDN}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder=".m3u/.mp4/.mpd"
-                                    onChange={(e) => setInputValues({ ...inputValues, seiresCDNWebLink: e.target.value })}
+                                    onChange={(e) => setInputValues({ ...inputValues, seiresCDN: e.target.value })}
+                                />
+                            </div>
+
+
+                            <div>
+                                <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Layout</label>
+
+                                <select
+                                    value={inputValues?.seriesLayout || 'Select Layout'} // default to 'v1' if inputValues?.seriesLayout is undefined
+                                    onChange={(e) => setInputValues({ ...inputValues, seriesLayout: e.target.value })}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                >
+                                    <option value={'v1'}>V1</option>
+                                    <option value={'v2'}>V2</option>
+                                    <option value={'v3'}>V3</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Optional Field One</label>
+                                <input
+                                    type="text"
+                                    id="s_yt"
+                                    value={inputValues?.optFieldOne}
+                                    onChange={(e) => setInputValues({ ...inputValues, optFieldOne: e.target.value })}
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Extra Field One"
                                 />
                             </div>
 
                             <div>
-                                <label for="s_cdn_link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series CDN Web Key</label>
+                                <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Optional Field Two</label>
                                 <input
                                     type="text"
-                                    id="s_cdn_link_web_key"
-                                    defaultValue={inputValues?.seiresCDNWebKey}
+                                    id="s_yt"
+                                    value={inputValues?.optFieldTwo}
+                                    onChange={(e) => setInputValues({ ...inputValues, optFieldTwo: e.target.value })}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="nzvspak2024"
-                                    onChange={(e) => setInputValues({ ...inputValues, seiresCDNWebKey: e.target.value })}
+                                    placeholder="Extra Field Two"
                                 />
                             </div>
+
+
 
                         </div>
                         <div class="mb-6">
@@ -772,9 +860,10 @@ const SeriesEdit = (props) => {
                                 <input
                                     type="text"
                                     id="s_time"
-                                    defaultValue={inputValues?.time}
+
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="09:45 PM"
+                                    defaultValue={inputValues?.time}
                                     onChange={(e) => setInputValues({ ...inputValues, time: e.target.value })}
 
                                 />
@@ -882,7 +971,7 @@ const SeriesEdit = (props) => {
 
 
 
-                        <div class="grid gap-6 mb-6 md:grid-cols-1">
+                        <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div class="mb-6">
                                 <label for="s_portraitImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ads Manager</label>
 
@@ -905,6 +994,14 @@ const SeriesEdit = (props) => {
                                         </option>
                                     ))}
                                 </select> */}
+                            </div>
+
+                            <div class="mb-6">
+                                <label for="s_portraitImg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Released Date</label>
+                                <input
+                                    defaultValue={inputValues?.releaseDate ? new Date(inputValues.releaseDate).toISOString().split('T')[0] : ''}
+                                    onChange={(e) => setInputValues({ ...inputValues, releaseDate: e.target.value })}
+                                    className=' py-1 px-1 bg-gray-700 w-full' type="date" id="releaseDate" name="releaseDate" />
                             </div>
                         </div>
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
