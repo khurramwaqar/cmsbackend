@@ -14,6 +14,8 @@ const Series = () => {
   const notify = () => toast.loading('Waiting...');
   const [isLoading, setIsLoading] = useState(true);
   const [series, setSeries] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredSeries, setFilteredSeries] = useState([]);
   const onSubmit = data => {
     console.log(data);
     notify();
@@ -50,7 +52,9 @@ const Series = () => {
       const response = axios.get('https://node.aryzap.com/api/series')
         .then(res => {
           console.log(res.data);
-          setSeries(res.data.series)
+          const sortedSeries = res.data.series.sort((a, b) => a.seriesType.localeCompare(b.seriesType));
+          setSeries(sortedSeries);
+          // setSeries(res.data.series)
         });
 
       setIsLoading(false);
@@ -76,6 +80,18 @@ const Series = () => {
     } catch (err) {
       console.error("Error Response: " + err);
     }
+  };
+
+  // Filter series based on search term
+  useEffect(() => {
+    if (series) {
+      setFilteredSeries(series.filter(s => s.title.toLowerCase().includes(searchTerm.toLowerCase())));
+    }
+  }, [searchTerm, series]);
+
+  // Handle search input change
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   return (
@@ -109,6 +125,17 @@ const Series = () => {
         Series
       </div>
 
+      {/* Search Bar */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search Series by Name"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="w-full p-2 border border-gray-300 rounded-md bg-black text-white"
+        />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
 
         <a href="/series/create">
@@ -133,21 +160,53 @@ const Series = () => {
           </div>
         </a >
 
-        {series ? series.map((app, index) => {
+        {/* {series ? series.map((app, index) => { */}
+        {filteredSeries.length > 0 ? filteredSeries.map((app, index) => {
+
           return (
             <div
               className={`rounded-md h-36 relative overflow-hidden block z-auto before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-transparent before:opacity-90 before:z-[-5]  bg-cover `}
+
               style={{
-                backgroundImage: `url(${app.imageCoverDesktop.includes('http') ? app.imageCoverDesktop : 'https://node.aryzap.com/public/' + app.imageCoverDesktop})`
-              }}>
+                backgroundImage: `url(${!app.imageCoverDesktop ||
+                    app.imageCoverDesktop.toLowerCase().includes('black') ||
+                    app.imageCoverDesktop.toLowerCase().includes('null') ||
+                    app.imageCoverDesktop.toLowerCase().includes('desktop/desktop') ||
+                    app.imageCoverDesktop.toLowerCase().includes(' ')
+                    ? '/images/digital-banner.webp'
+                    : 'https://node.aryzap.com/public/' + app.imageCoverDesktop
+                  })`
+              }}
+
+
+
+
+            >
               <div className="p-4">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-
-                    <div className='h-12'>
+                    {/* <div className='h-12'>
                       {app.logo == "" ? "" : <img src={'https://node.aryzap.com/public/' + app.logo} width="60px" />}
 
+                    </div> */}
+
+
+                    <div className="h-12">
+                      {!app.logo ||
+                        app.imageCoverDesktop.toLowerCase().includes('null') ||
+                        app.imageCoverDesktop.toLowerCase().includes('logo/null') ||
+                        app.imageCoverDesktop.toLowerCase().includes('bg-black')
+                        ? (
+                          <img src={'/images/logo-bg.png'} width="60px" alt="" />
+                        ) : (
+                          <img src={'https://node.aryzap.com/public/' + app.logo.trim()} width="60px" alt="" />
+                        )}
                     </div>
+
+
+
+
+
 
 
                     <h2 className="text-sm font-bold mt-2">

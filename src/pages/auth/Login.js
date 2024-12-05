@@ -6,37 +6,72 @@ const Login = () => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
+    // const handleSubmit = async (e) => {
+
+    //     e.preventDefault();
+    //     if (email != null || password != null) {
+    //         const respp = axios.post('https://node.aryzap.com/api/users/signin', {
+    //             email: email,
+    //             password: password
+    //         }).catch((error) => {
+    //             console.log(error);
+
+
+    //         }).then((response) => {
+    //             console.log(response);
+
+    //             if (response.status === 200) {
+    //                 const token = localStorage.setItem('token', response.data.token);
+
+    //             }
+    //             return window.location.href = '/';
+    //         });
+
+    //         toast.promise(respp, {
+    //             loading: 'Signing...',
+    //             success: 'Siging successful...',
+    //             error: 'Found some errors while signing...',
+    //         });
+
+    //     } else {
+    //         return alert("Please check your fields");
+    //     }
+    // }
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-        if (email != null || password != null) {
-            const respp = axios.post('https://node.aryzap.com/api/users/signin', {
-                email: email,
-                password: password
-            }).catch((error) => {
-                console.log(error);
-
-
-            }).then((response) => {
-                console.log(response);
-
+    
+        if (email && password) {
+            try {
+                const respp = axios.post('https://node.aryzap.com/api/users/signin', {
+                    email: email,
+                    password: password,
+                });
+    
+                // Display toast
+                toast.promise(
+                    respp,
+                    {
+                        loading: 'Signing in...',
+                        success: 'Sign-in successful!',
+                        error: 'Error signing in. Please check your details.',
+                    }
+                );
+    
+                // Wait for response
+                const response = await respp;
+    
                 if (response.status === 200) {
-                    const token = localStorage.setItem('token', response.data.token);
-
+                    localStorage.setItem('token', response.data.token);
+                    window.location.href = '/'; // Redirect after successfully setting token
                 }
-                return window.location.href = '/';
-            });
-
-            toast.promise(respp, {
-                loading: 'Signing...',
-                success: 'Siging successful...',
-                error: 'Found some errors while signing...',
-            });
-
+            } catch (error) {
+                console.error('Error during sign-in:', error);
+            }
         } else {
-            return alert("Please check your fields");
+            alert("Please check your fields");
         }
-    }
+    };
+    
     return (
         <>
             <Toaster
@@ -97,7 +132,7 @@ const Login = () => {
                                 type="checkbox"
                                 value=""
                                 class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                                required />
+                                 />
                         </div>
                         <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
                     </div>
