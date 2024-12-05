@@ -8,14 +8,18 @@ import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { Select } from 'react-select';
 
 const Series = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const notify = () => toast.loading('Waiting...');
   const [isLoading, setIsLoading] = useState(true);
   const [series, setSeries] = useState(null);
+  
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [filteredSeries, setFilteredSeries] = useState([]);
+  const categories = ["single-series","show","programs","live-event","live","Show"]
   const onSubmit = data => {
     console.log(data);
     notify();
@@ -91,11 +95,33 @@ const Series = () => {
       setFilteredSeries(series.filter(s => s.title.toLowerCase().includes(searchTerm.toLowerCase())));
     }
   }, [searchTerm, series]);
+  useEffect(() => {
+    if (series) {
+      if (selectedCategory === "") {
+        // When no category is selected, display all series
+        setFilteredSeries(series);
+      } else {
+        // When a category is selected, filter series by category
+        const filtered = series.filter((item) => item.seriesType === selectedCategory);
+        setFilteredSeries(filtered);
+      }
+    }
+  }, [selectedCategory, series]);
+  
 
   // Handle search input change
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
+
+  // Handle category select change
+  const handleSelectChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+
+  
+  
 
   return (
     <>
@@ -135,9 +161,25 @@ const Series = () => {
           placeholder="Search Series by Name"
           value={searchTerm}
           onChange={handleSearchChange}
-          className="w-full p-2 border border-gray-300 rounded-md bg-black text-white"
+          className="w-50 p-2 border border-gray-300 rounded-md bg-black text-white"
         />
+         <select
+          placeholder="Select By Category"
+          onChange={handleSelectChange}
+          className="w-50 p-2 border border-gray-300 rounded-md bg-black text-white"
+          value={selectedCategory}
+        >
+          <option value="">All Categories</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
       </div>
+
+
+
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
         
