@@ -57,33 +57,26 @@ const Series = () => {
     }
   });
 
-  const updateDelete = (id) => {
-    const response = axios.put(`https://node.aryzap.com/api/series/status/${id}`, {
-      status: "draft"
-    }).catch(err => {
-      console.log(err.message);
-      toast.promise(response, {
-        loading: 'Loading...',
-        success: 'Series has been deleted successfully',
-        error: 'Found some errors while deleting...',
-      });
-    }).then(res => {
+  const updateDelete = async (id) => {
+    const promise = axios.delete(`https://node.aryzap.com/api/series/${id}`);
 
-      console.log(res.data);
-      toast.promise(response, {
-        loading: 'Loading...',
-        success: 'Series has been deleted successfully',
-        error: 'Found some errors while deleting...',
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000)
+    toast.promise(promise, {
+      loading: 'Loading...',
+      success: 'Series has been deleted successfully',
+      error: 'Found some errors while deleting...',
     });
 
-
-
-
-  }
+    try {
+      const res = await promise;
+      console.log("Success Response: " + JSON.stringify(res.data));
+      // Uncomment below if you want to reload after a successful operation
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    } catch (err) {
+      console.error("Error Response: " + err);
+    }
+  };
 
   return (
     <>
@@ -115,9 +108,9 @@ const Series = () => {
       <div className="text-2xl font-bold pb-2 mb-5  border-b border-b-gray-500 ">
         Series
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
-        
+
         <a href="/series/create">
           <div className={"rounded-md h-36 hover:bg-gray-950 bg-blue-950 animate-pulse"}>
 
@@ -183,8 +176,8 @@ const Series = () => {
                     }
                   ]
                 })} className='hover:bg-red-500 w-full py-2 text-center'><div  >
-                <span className='text-white'>Delete</span>
-                </div></a>
+                    <span className='text-white'>Delete</span>
+                  </div></a>
               </div>
               {/* <div className=" z-10 text-center flex flex-row   opacity-0 hover:opacity-100  duration-300">
                 <a href={`series/edit/${app._id}`} class="bg-opacity-70 hover:bg-opacity-60 w-1/2 hover:bg-green-600 bg-green-950 h-40 ">

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@dnd-kit/sortable": "^10.0.0",
     "@ergisgjergji/react-confirm-alert": "^3.1.1",
     "@heroicons/react": "^2.0.18",
     "@testing-library/jest-dom": "^5.17.0",

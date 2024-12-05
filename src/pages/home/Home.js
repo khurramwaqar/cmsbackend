@@ -11,6 +11,25 @@ import gsap from 'gsap';
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 //import { findAll } from '../../users'
 
+import {
+    DndContext,
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+} from '@dnd-kit/core';
+import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+
+import { SortableItem } from './SortableItem';
+
+
+
 const Home = () => {
     const token = "zapkodernomad_931807_102";
     const { decodedToken, isExpired } = useJwt(token);
@@ -18,6 +37,13 @@ const Home = () => {
     const [error, setError] = useState(null);
     const [isLoad, setIsLoad] = useState(true);
     const [posts, setPosts] = useState();
+    const [items, setItems] = useState([1, 2, 3]);
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
     // const fetchData = async () => {
     //     setIsLoad(true)
 
@@ -40,12 +66,39 @@ const Home = () => {
 
         }
     });
+
+    function handleDragEnd(event) {
+        const { active, over } = event;
+
+        if (active.id !== over.id) {
+            setItems((items) => {
+                const oldIndex = items.indexOf(active.id);
+                const newIndex = items.indexOf(over.id);
+
+                return arrayMove(items, oldIndex, newIndex);
+            });
+        }
+    }
     return (
 
         <>
             <div className="text-2xl font-bold pb-2 mb-5  border-b border-b-gray-500">
                 Home
             </div>
+
+            <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+            >
+                <SortableContext
+                    items={items}
+                    strategy={verticalListSortingStrategy}
+                >
+                    {items.map(id => <SortableItem key={id} id={id} />)}
+                </SortableContext>
+            </DndContext>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
                 {/* {stats != null ? stats.status.db : stats} */}
                 {posts}
