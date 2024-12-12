@@ -19,7 +19,7 @@ const Series = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filteredSeries, setFilteredSeries] = useState([]);
-  const categories = ["single-series", "show", "programs", "live-event", "live", "Show"]
+  const categories = ["live", "live-event", "show", "programs", "single-series",]
   const onSubmit = data => {
     console.log(data);
     notify();

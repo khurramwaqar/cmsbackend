@@ -244,7 +244,7 @@ const SeriesCreate = () => {
                 geoPolicy: singleGeop,
                 adsManager: data.seriesAds,
                 seriesType: seriesEvent,
-                isDM: isVideoIs,
+                isDM: true,
                 seiresCDNWebLink: data.seiresCDNWebLink,
                 seiresCDNWebKey: data.seiresCDNWebKey,
                 seriesLayout: data.seriesLayout,
@@ -252,6 +252,7 @@ const SeriesCreate = () => {
                 optionalFieldOne: data.optFieldOne,
                 optionalFieldTwo: data.optFieldTwo,
                 releaseDate: data.releaseDate,
+                cdnPlatform: data.cdnPlatform
             }).catch((error) => {
 
                 return console.log(error);
@@ -523,13 +524,26 @@ const SeriesCreate = () => {
                                         placeholder="DM playlist"
                                     />
                                 </div>
-                                <div>
+                                {/* <div> 
                                     <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
                                     <Toggle
                                         defaultChecked={isVideoIs}
                                         onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
 
+                                </div>*/}
+                                <div>
+                                    <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CDN Platform</label>
+
+                                    <select {...register("cdnPlatform")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                        <option value={'yt'}> Youtube </option>
+                                        <option value={'dm'}> Dailymotion </option>
+                                        <option value={'cdn'}> CDN </option>
+
+                                    </select>
+
                                 </div>
+
+
                             </div>
 
                         }

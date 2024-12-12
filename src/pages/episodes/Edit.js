@@ -148,7 +148,7 @@ const EpisodeEdit = (props) => {
         console.log(finalApps);
         console.log(finalGenres);
         console.log(finalCategories);
-        alert(params.id);
+        // alert(params.id);
 
         try {
 
