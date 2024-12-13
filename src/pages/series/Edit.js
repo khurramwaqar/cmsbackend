@@ -26,7 +26,7 @@ const SeriesEdit = (props) => {
     const [image2, setImage2] = useState(null);
     const [image3, setImage3] = useState(null);
     const [image4, setImage4] = useState(null);
-    
+
     const [image5, setImage5] = useState(null);
     const [image6, setImage6] = useState(null);
 
@@ -116,6 +116,8 @@ const SeriesEdit = (props) => {
         imagePoster: '',
         imageCoverMobile: '',
         imageCoverDesktop: '',
+        imageCoverBig: '',
+        imageCoverExtra: '',
         trailer: '',
         ost: '',
         logo: '',
@@ -208,6 +210,8 @@ const SeriesEdit = (props) => {
                     imagePoster: res.data.imagePoster,
                     imageCoverMobile: res.data.imageCoverMobile,
                     imageCoverDesktop: res.data.imageCoverDesktop,
+                    imageCoverBig: res.data.imageCoverBig,
+                    imageCoverExtra: res.data.imageCoverExtra,
                     trailer: res.data.trailer,
                     ost: res.data.ost,
                     logo: res.data.logo,
@@ -430,7 +434,7 @@ const SeriesEdit = (props) => {
             setIsLoading(false);
         }
     };
-    const handleImg5= (e) => {
+    const handleImg5 = (e) => {
         e.preventDefault();
         const file = e.target.files[0];
         setImage5(file);
@@ -469,7 +473,7 @@ const SeriesEdit = (props) => {
             setIsLoading(false);
         }
     };
-    const handleImg6= (e) => {
+    const handleImg6 = (e) => {
         e.preventDefault();
         const file = e.target.files[0];
         setImage6(file);
@@ -532,7 +536,7 @@ const SeriesEdit = (props) => {
                 imageCoverMobile: `${image2}`,
                 imageCoverDesktop: `${image3}`,
                 imageCoverBig: `${image5}`,
-                imageCoverExtra:`${image6}`,
+                imageCoverExtra: `${image6}`,
                 trailer: inputValues.trailer,
                 ost: inputValues.ost,
                 logo: `${image4}`,
