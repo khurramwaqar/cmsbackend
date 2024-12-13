@@ -482,7 +482,7 @@ const HomeBuilderCreateV2 = () => {
                                                 <select onChange={(e) => updateItemAtIndex(key, { ...state[key], items: e.target.value, data: e.target.value, title: item.name, ui: e.target.value })} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                     <option value="null">Not Selected</option>
 
-                                                    {singleSeries.series.map((single) => <option value={single._id}> {single.title} </option>)}
+                                                    {singleSeries.series.map((single) => <option value={single._id + ":" + single.cdnPlatform}> {single.title} </option>)}
                                                 </select>
                                             )}
 
