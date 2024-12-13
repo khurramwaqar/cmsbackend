@@ -3,6 +3,7 @@ import fs from 'fs';
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
 import { CursorArrowRippleIcon } from '@heroicons/react/24/outline'
+import { HomeIcon } from '@heroicons/react/24/outline'
 import { ShimmerButton, ShimmerSectionHeader, ShimmerPostItem, ShimmerCircularImage, ShimmerCategoryItem } from 'react-shimmer-effects';
 const HomeBuilder = () => {
 
@@ -32,6 +33,27 @@ const HomeBuilder = () => {
                 Home Builder
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                <a href="/builder/createv3">
+                    <div className={"rounded-md hover:bg-gray-950 bg-blue-950 animate-pulse"}>
+
+                        <div className="p-6 ">
+                            <div className="flex items-center">
+                                <div className="flex-shrink-0">
+
+
+                                    <HomeIcon width={30} color='orange' />
+
+                                    <h2 className="text-sm font-bold mt-2">
+                                        Add an Home Builder V3
+                                    </h2>
+                                    <p className='text-xs font-light w-52'>
+                                        Add a new Home Section
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
                 <a href="/builder/createv2">
                     <div className={"rounded-md hover:bg-gray-950 bg-blue-950 animate-pulse"}>
 

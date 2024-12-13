@@ -43,6 +43,7 @@ import PackagesEdit from './pages/core/packages/Edit';
 import HomeBuilder from './pages/builder/HomeBuilder';
 import HomeBuilderCreate from './pages/builder/Create';
 import HomeBuilderCreateV2 from './pages/builder/CreateV2';
+import HomeBuilderCreateV3 from './pages/builder/CreateV3';
 import HomeBuilderEdit from './pages/builder/Edit';
 import SlidersCreate from './pages/sliders/Create';
 import HomeSliders from './pages/sliders/home';
@@ -142,6 +143,10 @@ const routerDef = [{
 {
   path: "/builder/createv2",
   element: <HomeBuilderCreateV2 />
+},
+{
+  path: "/builder/createv3",
+  element: <HomeBuilderCreateV3 />
 },
 {
   path: "/sliders",
