@@ -57,7 +57,7 @@ import DMEpisode from './pages/dmepisode/Episode';
 import CategoriesEdit from './pages/categories/Edit';
 import EpisodeEdit from './pages/episodes/Edit';
 import AppsEdit from './pages/apps/AppsEdit';
-import HomeBuilderCreateV3 from './pages/builder/CreateV3';
+
 
 const lsCache = localStorage;
 

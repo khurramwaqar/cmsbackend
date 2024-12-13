@@ -23,6 +23,8 @@ const SeriesCreate = () => {
     const [image2, setImage2] = useState(null);
     const [image3, setImage3] = useState(null);
     const [image4, setImage4] = useState(null);
+    const [image5, setImage5] = useState(null);
+    const [image6, setImage6] = useState(null);
     const [singleGeop, setSingleGeop] = useState(null);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [selectedApps, setSelectedApps] = useState(null);
@@ -218,6 +220,84 @@ const SeriesCreate = () => {
             setIsLoading(false);
         }
     };
+    const handleImg5 = (e) => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        setImage5(file);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = axios.post('https://node.aryzap.com/api/media/bupload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Ensure proper content type for file upload
+                },
+            }).catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            }).then((resp) => {
+                console.log(resp.data);
+                setImage4(resp.data.imagePath);
+                console.log(image5);
+                setIsLoading(false);
+            });
+            console.log(response.data);
+            if (response.status === 200) {
+                console.log('File uploaded successfully');
+            } else {
+                console.error('File upload failed');
+            }
+
+            toast.promise(response, {
+                loading: 'Logo Image Uploading...',
+                success: 'Logo Image Uploaded Successfully',
+                error: 'Found some errors while saving...',
+            });
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            setIsLoading(false);
+        }
+    };
+    const handleImg6 = (e) => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        setImage5(file);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = axios.post('https://node.aryzap.com/api/media/eupload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Ensure proper content type for file upload
+                },
+            }).catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            }).then((resp) => {
+                console.log(resp.data);
+                setImage4(resp.data.imagePath);
+                console.log(image6);
+                setIsLoading(false);
+            });
+            console.log(response.data);
+            if (response.status === 200) {
+                console.log('File uploaded successfully');
+            } else {
+                console.error('File upload failed');
+            }
+
+            toast.promise(response, {
+                loading: 'Logo Image Uploading...',
+                success: 'Logo Image Uploaded Successfully',
+                error: 'Found some errors while saving...',
+            });
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            setIsLoading(false);
+        }
+    };
 
 
 
@@ -236,8 +316,10 @@ const SeriesCreate = () => {
                 seriesYT: data.seriesYT,
                 seiresCDN: data.seriesCDNLink,
                 imagePoster: `poster/${image1}`,
-                imageCoverMobile: `mobile/${image2}`,
+                imageCoverMobile: `mobile/${image2}`, 
                 imageCoverDesktop: `desktop/${image3}`,
+                imageCoverBig: `big/${image5}`,
+                imageCoverExtra:`extra/${image6}`,
                 trailer: data.seriesTrailer,
                 ost: data.seriesOST,
                 logo: `logo/${image4}`,
@@ -822,6 +904,30 @@ const SeriesCreate = () => {
                                     accept="image/*"
                                     type="file" />
                                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 300x100px).</p>
+
+                            </div>
+                            <div class="mb-6">
+                                <label for="s_logoimg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image: Big</label>
+                                <input
+                                    onChange={(e) => handleImg5(e)}
+                                    className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-600 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300"
+                                    aria-describedby="file_input_help"
+                                    id="file_input"
+                                    accept="image/*"
+                                    type="file" />
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 1578x886px).</p>
+
+                            </div>
+                            <div class="mb-6">
+                                <label for="s_logoimg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image: Extra</label>
+                                <input
+                                    onChange={(e) => handleImg6(e)}
+                                    className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-600 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300"
+                                    aria-describedby="file_input_help"
+                                    id="file_input"
+                                    accept="image/*"
+                                    type="file" />
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (extra).</p>
 
                             </div>
 

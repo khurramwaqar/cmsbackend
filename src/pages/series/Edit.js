@@ -26,6 +26,10 @@ const SeriesEdit = (props) => {
     const [image2, setImage2] = useState(null);
     const [image3, setImage3] = useState(null);
     const [image4, setImage4] = useState(null);
+    
+    const [image5, setImage5] = useState(null);
+    const [image6, setImage6] = useState(null);
+
     const [geoPolicy, setGeoPolicy] = useState(null);
     const [singleGeop, setSingleGeop] = useState(null);
     const [singleAd, setSingleAd] = useState(null);
@@ -426,6 +430,84 @@ const SeriesEdit = (props) => {
             setIsLoading(false);
         }
     };
+    const handleImg5= (e) => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        setImage5(file);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = axios.post('https://node.aryzap.com/api/media/bupload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Ensure proper content type for file upload
+                },
+            }).catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            }).then((resp) => {
+                console.log(resp.data);
+                setImage5('big/' + resp.data.imagePath);
+                console.log(image4);
+                setIsLoading(false);
+            });
+            console.log(response.data);
+            if (response.status === 200) {
+                console.log('File uploaded successfully');
+            } else {
+                console.error('File upload failed');
+            }
+
+            toast.promise(response, {
+                loading: 'Big Image Uploading...',
+                success: 'Big Image Uploaded Successfully',
+                error: 'Found some errors while saving...',
+            });
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            setIsLoading(false);
+        }
+    };
+    const handleImg6= (e) => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        setImage6(file);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = axios.post('https://node.aryzap.com/api/media/eupload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Ensure proper content type for file upload
+                },
+            }).catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            }).then((resp) => {
+                console.log(resp.data);
+                setImage6('extra/' + resp.data.imagePath);
+                console.log(image4);
+                setIsLoading(false);
+            });
+            console.log(response.data);
+            if (response.status === 200) {
+                console.log('File uploaded successfully');
+            } else {
+                console.error('File upload failed');
+            }
+
+            toast.promise(response, {
+                loading: 'Extra Image Uploading...',
+                success: 'Extra Image Uploaded Successfully',
+                error: 'Found some errors while saving...',
+            });
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            setIsLoading(false);
+        }
+    };
 
 
     const onSubmit = (e) => {
@@ -449,6 +531,8 @@ const SeriesEdit = (props) => {
                 imagePoster: `${image1}`,
                 imageCoverMobile: `${image2}`,
                 imageCoverDesktop: `${image3}`,
+                imageCoverBig: `${image5}`,
+                imageCoverExtra:`${image6}`,
                 trailer: inputValues.trailer,
                 ost: inputValues.ost,
                 logo: `${image4}`,
@@ -1082,6 +1166,34 @@ const SeriesEdit = (props) => {
                                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 300x100px).</p>
                                 <div className="justify-center self-center" >
                                     {editData?.logo ? <img className="rounded-lg w-32 relative shadow-lg mx-auto" src={'https://node.aryzap.com/public/' + editData?.logo} /> : ""}
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="s_logoimg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image: Big</label>
+                                <input
+                                    onChange={(e) => handleImg5(e)}
+                                    className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-600 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300"
+                                    aria-describedby="file_input_help"
+                                    id="file_input"
+                                    accept="image/*"
+                                    type="file" />
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 1578x886px).</p>
+                                <div className="justify-center self-center" >
+                                    {editData?.imageCoverBig ? <img className="rounded-lg w-32 relative shadow-lg mx-auto" src={'https://node.aryzap.com/public/' + editData?.imageCoverBig} /> : ""}
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="s_logoimg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image: Extra</label>
+                                <input
+                                    onChange={(e) => handleImg6(e)}
+                                    className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-600 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300"
+                                    aria-describedby="file_input_help"
+                                    id="file_input"
+                                    accept="image/*"
+                                    type="file" />
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (extra).</p>
+                                <div className="justify-center self-center" >
+                                    {editData?.imageCoverExtra ? <img className="rounded-lg w-32 relative shadow-lg mx-auto" src={'https://node.aryzap.com/public/' + editData?.imageCoverExtra} /> : ""}
                                 </div>
                             </div>
 
