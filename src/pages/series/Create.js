@@ -30,6 +30,13 @@ const SeriesCreate = () => {
     const [selectedCategories, setSelectedCategories] = useState(null);
     const [apps, setApps] = useState(null);
     const [finalApps, setFinalApps] = useState(null);
+
+
+    const [ageRat, setAgeRat] = useState(null);
+
+    const [finalAgeRatings, setFinalAgeRating] = useState(null);
+    const [selectedAgeRatings, setSelectedAgeRatings] = useState(null);
+
     const [finalGenres, setFinalGenres] = useState(null);
     const [finalCategories, setFinalCategories] = useState(null);
     const [genres, setGenres] = useState(null);
@@ -236,15 +243,15 @@ const SeriesCreate = () => {
                 logo: `logo/${image4}`,
                 day: data.seriesAirDay,
                 time: data.seriesAirTime,
-                ageRatingId: data.seriesAges,
+                ageRatingId: finalAgeRatings,
                 genreId: finalGenres,
                 categoryId: finalCategories,
                 appId: finalApps,
                 status: "published",
                 geoPolicy: singleGeop,
                 adsManager: data.seriesAds,
-                seriesType: seriesEvent,
-                isDM: isVideoIs,
+                seriesType: data.seriesTypeR,
+                isDM: true,
                 seiresCDNWebLink: data.seiresCDNWebLink,
                 seiresCDNWebKey: data.seiresCDNWebKey,
                 seriesLayout: data.seriesLayout,
@@ -252,6 +259,7 @@ const SeriesCreate = () => {
                 optionalFieldOne: data.optFieldOne,
                 optionalFieldTwo: data.optFieldTwo,
                 releaseDate: data.releaseDate,
+                cdnPlatform: data.cdnPlatform
             }).catch((error) => {
 
                 return console.log(error);
@@ -280,7 +288,7 @@ const SeriesCreate = () => {
     const sfApps = [];
     const sfCatfegories = [];
     const sfGenres = [];
-
+    const sfAgeRatings = [];
     const handleChangeApps = (str) => {
         setSelectedApps(str);
         // create a for loop to get only values in above results which belongs to str variable and set to setFinalApps
@@ -289,6 +297,17 @@ const SeriesCreate = () => {
         }
         setFinalApps(sfApps);
     }
+
+    const handleChangeAgeRating = (str) => {
+        setSelectedAgeRatings(str);
+        // create a for loop to get only values in above results which belongs to str variable and set to setFinalApps
+        // for (let i = 0; i < str.length; i++) {
+        //     sfAgeRatings.push(str[i].value);
+        // }
+
+        setFinalAgeRating(str.value);
+    }
+
     const handleChangeGenres = (str) => {
         setSelectedGenres(str);
         // create a for loop to get only values in above results which belongs to str variable and set to setFinalApps
@@ -310,6 +329,8 @@ const SeriesCreate = () => {
     const genresHolder = [];
     const categoriesHolder = [];
     const geoPolicyHolder = [];
+
+    const ageRatingHolder = [];
 
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
@@ -365,7 +386,14 @@ const SeriesCreate = () => {
             const agesResp = axios.get('https://node.aryzap.com/api/ageratings').catch(error => {
                 alert(error.message);
             }).then(response => {
-                setAges(response.data);
+                //setAges(response.data);
+                for (let i = 0; i < response.data.length; i++) {
+                    ageRatingHolder.push({
+                        value: response.data[i]._id,
+                        label: response.data[i].title,
+                    });
+                }
+                setAgeRat(ageRatingHolder);
             });
 
             const adsResp = axios.get('https://node.aryzap.com/api/ads').catch(error => {
@@ -435,16 +463,30 @@ const SeriesCreate = () => {
                     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new Series</h2>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
+                        <div className='mb-6'>
                             <div>
                                 <label for="series_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series name</label>
                                 <input
                                     type="text"
+                                    required="true"
                                     id="s_name"
                                     {...register("seriesName")}
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="The Shawshank Redemption"
                                 />
+                            </div>
+                        </div>
+                        <div class="grid gap-6 mb-6 md:grid-cols-2">
+                            <div>
+                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CDN Platform</label>
+
+                                <select required {...register("cdnPlatform")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value={'yt'}> Youtube </option>
+                                    <option value={'dm'}> Dailymotion </option>
+                                    <option value={'cdn'}> CDN </option>
+
+                                </select>
+
                             </div>
                             <div>
                                 <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Type</label>
@@ -455,7 +497,7 @@ const SeriesCreate = () => {
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Series Type: show|live|singleVideo|webview"
                                     required /> */}
-                                <select onChange={(e) => eventChangeFunc(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <select {...register("seriesTypeR")} onChange={(e) => eventChangeFunc(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     <option value={'show'}> Show </option>
                                     <option value={'live-event'}> Live Event </option>
                                     <option value={'live'}> Live </option>
@@ -526,10 +568,14 @@ const SeriesCreate = () => {
                                 <div>
                                     <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
                                     <Toggle
+                                        disabled
                                         defaultChecked={isVideoIs}
                                         onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
 
                                 </div>
+
+
+
                             </div>
 
                         }
@@ -638,16 +684,24 @@ const SeriesCreate = () => {
                             </div>
                             <div class="mb-6">
                                 <label for="s_ages" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age Ratings</label>
-                                <select {...register("seriesAges")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                {/* <select {...register("seriesAges")} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     {ages != null && ages.map((age, index) => {
                                         return <option value={age._id}> {age.title} </option>
                                     })}
-                                </select>
+                                </select> */}
+                                <Select
+                                    required={true}
+                                    className='text-black'
+                                    value={selectedAgeRatings}
+                                    onChange={handleChangeAgeRating}
+                                    options={ageRat}
+                                />
                             </div>
 
                             <div class="mb-6">
                                 <label for="s_genres" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Genres</label>
                                 <Select
+                                    required={true}
                                     isMulti
                                     className='text-black'
                                     value={selectedGenres}
@@ -659,6 +713,7 @@ const SeriesCreate = () => {
                             <div class="mb-6">
                                 <label for="s_categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categories ID</label>
                                 <Select
+                                    required={true}
                                     isMulti
                                     className='text-black'
                                     value={selectedCategories}
@@ -676,6 +731,7 @@ const SeriesCreate = () => {
                                 </select> */}
                                 <Select
                                     isMulti
+                                    required={true}
                                     className='text-black'
                                     value={selectedApps}
                                     onChange={handleChangeApps}

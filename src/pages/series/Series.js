@@ -19,7 +19,7 @@ const Series = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filteredSeries, setFilteredSeries] = useState([]);
-  const categories = ["single-series", "show", "programs", "live-event", "live", "Show"]
+  const categories = ["live", "live-event", "show", "programs", "single-series",]
   const onSubmit = data => {
     console.log(data);
     notify();
@@ -51,19 +51,46 @@ const Series = () => {
     overlayClassName: "overlay-custom-class-name"
   };
 
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     const response = axios.get('https://node.aryzap.com/api/series')
+  //       .then(res => {
+  //         console.log(res.data);
+  //         const sortedSeries = res.data.series.sort((a, b) => a.seriesType.localeCompare(b.seriesType));
+  //         setSeries(sortedSeries);
+  //         // setSeries(res.data.series)
+  //       });
+
+  //     setIsLoading(false);
+  //   }
+  // });
+
   useEffect(() => {
     if (isLoading) {
-      const response = axios.get('https://node.aryzap.com/api/series')
+      axios.get('https://node.aryzap.com/api/series')
         .then(res => {
           console.log(res.data);
-          const sortedSeries = res.data.series.sort((a, b) => a.seriesType.localeCompare(b.seriesType));
-          setSeries(sortedSeries);
-          // setSeries(res.data.series)
-        });
 
-      setIsLoading(false);
+          // Check if series data exists
+          if (res.data && res.data.series && res.data.series.length > 0) {
+            const sortedSeries = res.data.series.sort((a, b) => a.seriesType.localeCompare(b.seriesType));
+            setSeries(sortedSeries);
+          } else {
+            // Handle case where there is no series
+            console.log("No series data available");
+            setSeries([]); // Or set some default data to show
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching series data: ", error);
+          // Handle any other errors, like network or API issues
+          setSeries([]); // Or set some default data
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
-  });
+  }, [isLoading]);
 
   const updateDelete = async (id) => {
     const promise = axios.delete(`https://node.aryzap.com/api/series/${id}`);

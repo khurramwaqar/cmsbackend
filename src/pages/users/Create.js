@@ -33,7 +33,7 @@ const UsersCreate = () => {
     const [userName, setUsername] = useState(false);
     const [email, setEmail] = useState(false);
     const [password, setPassword] = useState(false);
-    const [condition, setCondition] = useState(false);
+    const [condition, setCondition] = useState("user");
     const [genreDesc, setGenreDesc] = useState(false);
     const [appId, setAppId] = useState(false);
 

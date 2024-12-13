@@ -128,6 +128,7 @@ const SeriesEdit = (props) => {
         optFieldTwo: '',
         isLive: Boolean,
         seriesLayout: '',
+        cdnPlatform: '',
         releaseDate: ''
 
     });
@@ -151,6 +152,7 @@ const SeriesEdit = (props) => {
                 setImage3(res.data.imageCoverDesktop);
                 setImage4(res.data.logo);
                 setIsVideoIs(res.data.isDM);
+                setIsLive(res?.data?.isLive);
 
                 for (let i = 0; i < res.data.genreId?.length; i++) {
                     eGenresHolder.push({
@@ -216,6 +218,7 @@ const SeriesEdit = (props) => {
                     seriesLayout: res.data.seriesLayout,
                     releaseDate: res.data.releaseDate,
                     isLive: res.data.isLive,
+                    cdnPlatform: res.data.cdnPlatform,
                 });
                 eventChangeFunc(res.data.seriesType)
 
@@ -459,14 +462,15 @@ const SeriesEdit = (props) => {
                 geoPolicy: singleGeop,
                 adsManager: singleAd,
                 seriesType: seriesEvent,
-                isDM: isVideoIs,
+                isDM: true,
                 seiresCDNWebLink: inputValues.seiresCDNWebLink,
                 seiresCDNWebKey: inputValues.seiresCDNWebKey,
                 optionalFieldOne: inputValues.optFieldOne,
                 optionalFieldTwo: inputValues.optFieldTwo,
                 seriesLayout: inputValues.seriesLayout,
-                isLive: inputValues.isLive,
-                releaseDate: inputValues.releaseDate
+                isLive: isLive,
+                releaseDate: inputValues.releaseDate,
+                cdnPlatform: inputValues.cdnPlatform
 
             }).catch((error) => {
 
@@ -642,7 +646,7 @@ const SeriesEdit = (props) => {
                     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit Series</h2>
 
                     <form onSubmit={onSubmit}>
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
+                        <div class="mb-6">
                             <div>
                                 <label for="series_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Series Name</label>
                                 <input
@@ -656,6 +660,21 @@ const SeriesEdit = (props) => {
                                         setInputValues({ ...inputValues, title: e.target.value })
                                     }}
                                 />
+                            </div>
+                        </div>
+                        <div class="grid gap-6 mb-6 md:grid-cols-2">
+                            <div>
+                                <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CDN Platform</label>
+                                <select
+                                    value={inputValues?.cdnPlatform || 'Select CDN Platform'} // default to 'v1' if inputValues?.seriesLayout is undefined
+                                    onChange={(e) => setInputValues({ ...inputValues, cdnPlatform: e.target.value })}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                >
+                                    <option value={'yt'}> Youtube </option>
+                                    <option value={'dm'}> Dailymotion </option>
+                                    <option value={'cdn'}> CDN </option>
+                                </select>
+
                             </div>
                             <div>
 
@@ -679,6 +698,8 @@ const SeriesEdit = (props) => {
 
 
                             </div>
+
+
                         </div>
 
                         {seriesEvent == "live-event" || seriesEvent == "live" || seriesEvent == "singleVideo" ?
@@ -708,13 +729,13 @@ const SeriesEdit = (props) => {
                                             onChange={(e) => setInputValues({ ...inputValues, seiresCDNWebKey: e.target.value })}
                                         />
                                     </div>
+
+
                                     <div>
                                         <label for="s_yt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Is Live</label>
                                         <Toggle
                                             defaultChecked={isLive}
                                             onChange={() => { if (isLive == true) { setIsLive(false); } else { setIsLive(true); } }} />
-
-
                                     </div>
                                 </div>
 
@@ -744,6 +765,7 @@ const SeriesEdit = (props) => {
                                 <div>
                                     <label for="s_ost" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DM or YT</label>
                                     <Toggle
+                                        disabled
                                         defaultChecked={isVideoIs}
                                         onChange={() => { if (isVideoIs == true) { setIsVideoIs(false); } else { setIsVideoIs(true); } }} />
 
