@@ -118,8 +118,8 @@ const HomeBuilderEditV2 = (props) => {
             });
         }
         else if (updatedItem.type == "SingleSeries") {
-
-            const series = axios.get('https://node.aryzap.com/api/series/' + updatedItem.items).catch(error => {
+            const [sId, sPlatform] = updatedItem.items.split(":");
+            const series = axios.get('https://node.aryzap.com/api/series/' + sId).catch(error => {
                 alert(error.message);
             }).then(response => {
                 console.log(response.data);
